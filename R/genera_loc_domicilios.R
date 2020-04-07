@@ -7,6 +7,7 @@
 #' @param sep El separador a ser usado cuando se peguen los campos. Por default ", "
 #' @param campoNumero Campo con el número de la calle
 #' @return Un vector de campos para ser georreferenciados.
+#' @export
 genera_loc_domicilios = function(datos,campos,texto_a_eliminar=c('*SIN DATO* (*SIN DATO*)','NULL',paste('COMUNA',1:20)),prefijo='ARGENTINA',sep=', ',campoNumero=NULL){
   loc_domicilio = prefijo
   if(is.null(campoNumero)) campoNumero = campos[length(campos)]

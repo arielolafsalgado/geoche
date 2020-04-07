@@ -7,9 +7,11 @@
 #' @param lonlat_columns_osm Columnas con las ubicaciones lon y lat de las filas en data_osm. Por default c('LON_RESIDENCIA_OSM','LAT_RESIDENCIA_OSM')
 #' @param crs crs usado para buscar la interseccion. Por default 22185
 #' @param id_column Columna con los ids en el archivo OSM. Por default, 'IDEVENTOCASO'
+#' @param verbose Booleano ¿debe imprimir el progreso? Default TRUE
 #' @param write.it Se deben escribir los archivos? Por default TRUE
 #' @return Una lista con ambos data frames.
-checkea_departamentos_ggmap_y_osm = function(inputArchivo = 'bases/Base_p_ariel_y_yamila.csv',departamentos_path='shp/departamentos/censo_por_departamento_polígonos.shp',depto_id_column='ID_DEPTO',lonlat_columns_ggmap=c('LON_RESIDENCIA','LAT_RESIDENCIA'),lonlat_columns_osm=c('LON_RESIDENCIA_OSM','LAT_RESIDENCIA_OSM'),crs=22185,id_column='IDEVENTOCASO',write.it=T){
+#' @export
+checkea_departamentos_ggmap_y_osm = function(inputArchivo = 'bases/Base_p_ariel_y_yamila.csv',departamentos_path='shp/departamentos/censo_por_departamento_polígonos.shp',depto_id_column='ID_DEPTO',lonlat_columns_ggmap=c('LON_RESIDENCIA','LAT_RESIDENCIA'),lonlat_columns_osm=c('LON_RESIDENCIA_OSM','LAT_RESIDENCIA_OSM'),crs=22185,id_column='IDEVENTOCASO',verbose=T,write.it=T){
   require(sf)
   inputGGMAP = sub('.csv','_georrefGGMAP.csv',inputArchivo)
   inputOSM = sub('.csv','_georrefOSM.csv',inputArchivo)
@@ -17,7 +19,7 @@ checkea_departamentos_ggmap_y_osm = function(inputArchivo = 'bases/Base_p_ariel_
   data_osm = read.csv(inputOSM,stringsAsFactors=F)
   departamentos = read_sf(departamentos_path) # El shp de las provincias
   data_ggmap = check_departamentos_ggmap(data_ggmap,departamentos,depto_id_column=depto_id_column,lonlat_columns=lonlat_columns_ggmap,verbose=verbose)
-  data_osm = check_departamentos_osm(data_osm,data_ggmap,departamentos,depto_id_column=depto_id_column,lonlat_columns=lonlat_columns_osm,id_column=id_column,verbose=verbos)
+  data_osm = check_departamentos_osm(data_osm,data_ggmap,departamentos,depto_id_column=depto_id_column,lonlat_columns=lonlat_columns_osm,id_column=id_column,verbose=verbose)
 
   ## RESUMEN
   if(verbose){

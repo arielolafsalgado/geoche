@@ -10,7 +10,8 @@
   prov_id_column = "ID_PROVINCIA",
   lonlat_columns_ggmap = c("LON_RESIDENCIA", "LAT_RESIDENCIA"),
   lonlat_columns_osm = c("LON_RESIDENCIA_OSM", "LAT_RESIDENCIA_OSM"),
-  crs = 22185, id_column = "IDEVENTOCASO", write.it = T)
+  crs = 22185, id_column = "IDEVENTOCASO", verbose = T,
+  write.it = T)
 }
 \arguments{
 \item{inputArchivo}{Path a partir del cual construir los paths para ggmap y osm. El archivo que fue usado para construirlos.}
@@ -26,6 +27,8 @@
 \item{crs}{crs usado para buscar la interseccion. Por default 22185}
 
 \item{id_column}{Columna con los ids en el archivo OSM. Por default, 'IDEVENTOCASO'}
+
+\item{verbose}{Booleano ¿debe imprimir el progreso? Default TRUE}
 
 \item{write.it}{Se deben escribir los archivos? Por default TRUE}
 }

@@ -7,8 +7,10 @@
 #' @param lonlat_columns_osm Columnas con las ubicaciones lon y lat de las filas en data_osm. Por default c('LON_RESIDENCIA_OSM','LAT_RESIDENCIA_OSM')
 #' @param id_column Columna con los ids en el archivo OSM. Por default, 'IDEVENTOCASO'
 #' @param write.it Se deben escribir los archivos? Por default TRUE
+#' @param verbose Booleano ¿debe imprimir el progreso? Default TRUE
 #' @return Una lista con ambos data frames.
-checkea_hospitales_ggmap_y_osm = function(inputArchivo = 'bases/Base_p_ariel_y_yamila.csv',hospitales_path='shp/hospitales/ListadoREFES.shp',hospi_name_column='ESTAB_CLINICA',lonlat_columns_ggmap=c('LON_RESIDENCIA','LAT_RESIDENCIA'),lonlat_columns_osm=c('LON_RESIDENCIA_OSM','LAT_RESIDENCIA_OSM'),max_distancia = 200*1000,id_column='IDEVENTOCASO',write.it=T){
+#' @export
+checkea_clinica_ggmap_y_osm = function(inputArchivo = 'bases/Base_p_ariel_y_yamila.csv',hospitales_path='shp/hospitales/ListadoREFES.shp',hospi_name_column='ESTAB_CLINICA',lonlat_columns_ggmap=c('LON_RESIDENCIA','LAT_RESIDENCIA'),lonlat_columns_osm=c('LON_RESIDENCIA_OSM','LAT_RESIDENCIA_OSM'),max_distancia = 200*1000,id_column='IDEVENTOCASO',write.it=T,verbose=T){
   require(sf)
   inputGGMAP = sub('.csv','_georrefGGMAP.csv',inputArchivo)
   inputOSM = sub('.csv','_georrefOSM.csv',inputArchivo)

@@ -7,6 +7,7 @@
 #' @param verbose Boleano ¿Debe imprimirse el progreso? Por default TRUE
 #' @param crs Sistema coordenado de referencia sobre el cual buscar las intersecciones. Por default 22185
 #' @return Un data frame identico a data_ggmap, pero que también contiene una columna con TRUE,FALSE,NA segun cumpla o no el criterio, o no se haya podido checkear.
+#' @export
 check_provincia_ggmap = function(data_ggmap,provincias,prov_id_column='ID_PROV_INDEC_RESIDENCIA',lonlat_columns=c('LON_RESIDENCIA','LAT_RESIDENCIA'),verbose=T,crs=22185){
   data_ggmap$LAT_LON_EN_PROVINCIA = NA # Una columna en la que voy a anotar el éxito de la búsqueda
   for(row_ggmap in 1:nrow(data_ggmap)){

@@ -4,9 +4,8 @@
 \alias{combina_bases}
 \title{Combina dos bases}
 \usage{
-combina_bases(inputArchivo1, inputArchivo2,
-  outputArchivo = paste(sub(".csv", "", inputArchivo1), inputArchivo2,
-  sep = "_pegado_"), id_column = "IDEVENTOCASO", ...)
+combina_bases(inputArchivo1, inputArchivo2, outputArchivo = NULL,
+  id_column = "IDEVENTOCASO", ...)
 }
 \arguments{
 \item{inputArchivo1}{El primer archivo, como path hasta el archivo.}

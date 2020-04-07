@@ -3,6 +3,7 @@
 #' @param loc_genericas Las ubicaciones genericas a ser buscadas
 #' @param ubicaciones_genericas_path El path hacia el archivo de ubicaciones genericas. Si no existe, se creará en ese lugar el archivo nuevo.
 #' @return Un data frame con las ubicaciones genericas cargadas
+#' @export
 actualiza_ubicaciones_genericas_osm = function(loc_genericas,ubicaciones_genericas_path='ubicaciones_genericas_osm.csv',timeout=5,verbose=T){
   require(stringr)
   ubicaciones_genericas_osm = NULL

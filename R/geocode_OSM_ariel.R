@@ -5,6 +5,7 @@
 #' @param timeout Dado que muchas veces OSM se cuelga esperando la respuesta, la función espera timeout segundos o pasa al siguiente elemento a ser buscado.
 #' @param verbose Boleano, ¿Imprimir progreso? Por default TRUE
 #' @return Un data frame con las ubicaciones georreferenciadas. Solo las exitosas aparecen, y puede haber más de una ubicacion por domicilio.
+#' @export
 geocode_OSM_ariel = function(loc_domicilio,aun_por=1:length(loc_domicilio),timeout=5,verbose=T){
   require(tmaptools)
   require(R.utils)

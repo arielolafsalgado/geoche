@@ -12,8 +12,11 @@
 #' @param id_column Columna para vincular data_ggmap con data_osm. Por default IDEVENTOCASO
 #' @param na.value Como consideran en terminos de puntaje aquellos checkeos que hayan dado NA. Por default, es FALSE
 #' @param verbose Boleano ¿Debe imprimirse el progreso? Por default TRUE
+#' @param write.it Se deben escribir los archivos? Por default TRUE
+#' @param mapa_check Si es TRUE, guarda también un mapa generado con leaflet con los casos y colores según su calidad.
 #' @return Un data frame con la ubicacion elegida para cada caso, indicando el puntaje que obtuvo y de donde proviene, así como el agregado de la ubicación de la clinica.
-compara_GGMAP_OSM = function(inputArchivo = 'bases/Base_p_ariel_y_yamila.csv',peso_hospital=10,peso_generico=1,peso_provincia=1,peso_departamento=1,peso_distancia=1,puntaje_de_corte=-5,lonlat_columns_ggmap=c('LON_RESIDENCIA','LAT_RESIDENCIA'),lonlat_columns_osm=c('LON_RESIDENCIA_OSM','LAT_RESIDENCIA_OSM'),max_dist=1000,id_column='IDEVENTOCASO',na.value=FALSE,verbose=T){
+#' @export
+compara_GGMAP_OSM = function(inputArchivo = 'bases/Base_p_ariel_y_yamila.csv',peso_hospital=10,peso_generico=1,peso_provincia=1,peso_departamento=1,peso_distancia=1,puntaje_de_corte=-5,lonlat_columns_ggmap=c('LON_RESIDENCIA','LAT_RESIDENCIA'),lonlat_columns_osm=c('LON_RESIDENCIA_OSM','LAT_RESIDENCIA_OSM'),max_dist=1000,id_column='IDEVENTOCASO',na.value=FALSE,write.it=T,verbose=T,mapa_check=F){
   inputGGMAP = sub('.csv','_georrefGGMAP.csv',inputArchivo)
   inputOSM = sub('.csv','_georrefOSM.csv',inputArchivo)
   data_ggmap = read.csv(inputGGMAP,stringsAsFactors=F)
@@ -50,8 +53,8 @@ compara_GGMAP_OSM = function(inputArchivo = 'bases/Base_p_ariel_y_yamila.csv',pe
         # Si gano uno de OSM, cambio la posición en el dataset final
         data_check$COMPARACION_ELECTO[row_ggmap] = 'OSM'
         row_osm_winner = row_osm[winner_row-1]
-        lat = data_osm[row_osm_winner,latlon_columns_osm[2]]
-        lon = data_osm[row_osm_winner,latlon_columns_osm[1]]
+        lat = data_osm[row_osm_winner,lonlat_columns_osm[2]]
+        lon = data_osm[row_osm_winner,lonlat_columns_osm[1]]
         data_check$LAT_RESIDENCIA[row_ggmap] = lat
         data_check$LON_RESIDENCIA[row_ggmap] = lon
         if(all(!is.null(data_check$CERCA_CLINICA))) data_check$CERCA_CLINICA[row_ggmap] = consistencia_hospital[winner_row]
@@ -119,5 +122,14 @@ compara_GGMAP_OSM = function(inputArchivo = 'bases/Base_p_ariel_y_yamila.csv',pe
     print('PUNTAJES DE CADA VALOR')
     print(table(data_check$COMPARACION_PUNTAJE))
   }
-  return(data_check)
+  result = data_check
+  if(mapa_check){
+    require(leaflet)
+    map = leaflet() %>% addProviderTiles(providers$OpenStreetMap)
+    markerColors = c('BUENA'='green','MEDIA'='yellow','BAJA'='red')
+    map = map %>% addCircles(data=data_check,lat=~LAT_RESIDENCIA_MEJOR,lng = ~LON_RESIDENCIA,popup= ~paste('ID:', IDEVENTOCASO,'- BUSQUEDA:', BUSQUEDA_RESIDENCIA,'- CONFIABILIDAD:',CONFIABILIDAD, '- EN PROVINCIA', LAT_LON_EN_PROVINCIA, '- PUNTAJE:',COMPARACION_PUNTAJE,' - ID:',IDEVENTOCASO),color=~as.character(markerColors[CONFIABILIDAD]))
+    map = map %>% addLegend(position = 'topright',labels = names(markerColors),colors = as.character(markerColors))
+    result = list('dataset'=data_check,'map'=map)
+  }
+  return(result)
 }

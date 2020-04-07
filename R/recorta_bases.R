@@ -6,7 +6,8 @@
 #' @param columnas Las columnas mediante las cuales matchear los datasets
 #' @param ... Se pasa a read.csv
 #' @return El dataset recortado.
-recorta_bases = function(inputArchivo1,inputArchivo2,outputArchivo=paste(sub('.csv','',inputArchivo1),inputArchivo2,sep='_pegado_'),columnas='IDEVENTOCASO',...){
+#' @export
+recorta_bases = function(inputArchivo1,inputArchivo2,outputArchivo=paste(sub('.csv','',inputArchivo1),inputArchivo2,sep='_recortado_'),columnas='IDEVENTOCASO',...){
   b1 = read.csv(inputArchivo1,stringsAsFactors=F,...)
   b2 = read.csv(inputArchivo2,stringsAsFactors=F,...)
   t1 = ''
@@ -15,8 +16,8 @@ recorta_bases = function(inputArchivo1,inputArchivo2,outputArchivo=paste(sub('.c
     t1 = paste(t1,b1[,cn],sep='--')
     t2 = paste(t2,b2[,cn],sep='--')
   }
-  reapeated = is.element(t2,t1)
-  bout = b2[!repeated,]
+  repeated = is.element(t1,t2)
+  bout = b1[!repeated,]
   write.csv(bout,outputArchivo,row.names=F)
   return(bout)
 }

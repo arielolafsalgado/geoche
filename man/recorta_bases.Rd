@@ -6,7 +6,7 @@
 \usage{
 recorta_bases(inputArchivo1, inputArchivo2,
   outputArchivo = paste(sub(".csv", "", inputArchivo1), inputArchivo2,
-  sep = "_pegado_"), columnas = "IDEVENTOCASO", ...)
+  sep = "_recortado_"), columnas = "IDEVENTOCASO", ...)
 }
 \arguments{
 \item{inputArchivo1}{El primer archivo, como path hasta el archivo.}

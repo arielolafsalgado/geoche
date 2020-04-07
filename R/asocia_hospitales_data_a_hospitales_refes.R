@@ -4,6 +4,7 @@
 #' @param hospi_name_column La columna que contiene el nombre de las clinicas en data_ggmap
 #' @param hospitales Objecto sf conteniendo las ubicaciones de los hospitales.
 #' @return Una lista con las filas de hospitales, nombrada con los hospitales en data_ggmap
+#' @export
 asocia_hospitales_data_a_hospitales_refes = function(data_ggmap,hospitales,hospi_name_column='ESTAB_CLINICA'){
   hospis_datos = unique(data_ggmap[,hospi_name_column])
   hospis_datos_shp = sapply(hospis_datos,function(hospi){

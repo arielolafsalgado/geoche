@@ -10,6 +10,7 @@
 #' @param id_column Columna para vincular data_ggmap con data_osm. Por default IDEVENTOCASO
 #' @param verbose Boleano ¿Debe imprimirse el progreso? Por default TRUE
 #' @return El mismo data frame, pero con una columna nueva que indica si pasó el check
+#' @export
 checkea_clinica_osm = function(data_osm,data_ggmap,hospis_datos_shp,hospitales,max_distancia=200*1000,lonlat_columns=c('LON_RESIDENCIA_OSM','LAT_RESIDENCIA_OSM'),hospi_name_column='ESTAB_CLINICA',id_column='IDEVENTOCASO',verbose=T){
   data_osm$CERCA_CLINICA = NA
   for(row_osm in 1:nrow(data_osm)){

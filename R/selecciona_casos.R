@@ -4,6 +4,7 @@
 #' @param columna La columna en la que buscar casos
 #' @param casos Los casos a retener de esa columna
 #' @return El dataset recortado.
+#' @export
 selecciona_casos = function(dataset,columna,casos){
   idx = which(is.element(dataset[,columna],casos))
   return(dataset[idx,])

@@ -8,6 +8,7 @@
 #' @param write.it Debe escribirse el resultado? Por default TRUE
 #' @param verbose Boleano, ¿debe indicarse el resultado? Por default TRUE
 #' @return Devuelve el dataset con las columnas agregadas.
+#' @export
 georreferencia_osm = function(inputArchivo = sub('.csv','_recortados.csv','bases/francoA/ListadoA.csv'),id_column='IDEVENTOCASO',campos_a_domicilio=c("Localidad","Calle","Número"),campos_a_domicilio2=c("Partido","Localidad","Calle","Número"),prefijo_domicilio='ARGENTINA',sep=',',write.it=T,verbose=T,timeout=5){
   require(stringr)
   datos = read.csv(inputArchivo,stringsAsFactors=F,sep=sep)

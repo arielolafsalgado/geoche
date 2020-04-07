@@ -6,6 +6,7 @@
 #' @param lonlat_column Las columnas lon y lat en las que están las ubicaciones del caso
 #' @param verbose Boleano ¿Debe imprimirse el progreso? Por default TRUE
 #' @return  Un data frame identico a data_ggmap, pero que también contiene una columna con TRUE,FALSE,NA segun cumpla o no el criterio, o no se haya podido checkear.
+#' @export
 check_departamentos_ggmap = function(data_ggmap,departamentos,depto_id_column='ID_DEPTO_INDEC_RESIDENCIA',lonlat_columns=c('LON_RESIDENCIA','LAT_RESIDENCIA'),verbose=TRUE){
   data_ggmap$LAT_LON_EN_DEPARTAMENTO = NA # Una columna en la que voy a anotar el éxito de la búsqueda
   data_ggmap$LAT_LON_DEPARTAMENTO = NA

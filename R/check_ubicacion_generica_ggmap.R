@@ -8,6 +8,7 @@
 #' @param text_a_eliminar El texto a ser eliminado en la construcción de las ubicaciones genericas. Por default c('*SIN DATO* (*SIN DATO*)','NULL')
 #' @param verbose Boleano ¿Debe imprimirse el progreso? Por default TRUE
 #' @return El mismo data frame, pero con una columna nueva que indica si pasó el check
+#' @export
 check_ubicacion_generica_ggmap = function(data_ggmap,ubicaciones_genericas_ggmap,campos_genericos1,campos_genericos2,lonlat_columns=c('LON_RESIDENCIA','LAT_RESIDENCIA'),texto_a_eliminar=c('*SIN DATO* (*SIN DATO*)','NULL'),verbose=T){
   data_ggmap$MATCH_GENERICO = NA
   for(row_ggmap in 1:nrow(data_ggmap)){

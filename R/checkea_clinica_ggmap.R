@@ -8,6 +8,7 @@
 #' @param hospi_name_column La columna que contiene el nombre de las clinicas en data_ggmap
 #' @param verbose Boleano ¿Debe imprimirse el progreso? Por default TRUE
 #' @return El mismo data frame, pero con una columna nueva que indica si pasó el check, y además la posición lonlat de la clinica
+#' @export
 checkea_clinica_ggmap = function(data_ggmap,hospis_datos_shp,hospitales,max_distancia=200*1000,lonlat_columns=c('LON_RESIDENCIA','LAT_RESIDENCIA'),hospi_name_column='ESTAB_CLINICA',verbose=T){
   data_ggmap$CERCA_CLINICA = NA
   data_ggmap$LAT_CLINICA = NA

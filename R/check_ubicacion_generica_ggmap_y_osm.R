@@ -10,6 +10,7 @@
 #' @param timeout La cantidad de tiempo máxima a esperar por busqueda en OSM
 #' @description Esta función calcula la georreferenciación de los datos mediante osm y devuelve el data frame, con columnas LAT_RESIDENCIA_OSM y LON_RESIDENCIA_OSM.
 #' @return Devuelve una lista con ambos datasets
+#' @export
 check_ubicacion_generica_ggmap_y_osm = function(inputArchivo = sub('.csv','_recortados.csv','bases/francoA/ListadoA.csv'),ubicaciones_genericas_ggmap_path = 'ubicaciones_genericas/ubicaciones_genericas_ggmap.csv',ubicaciones_genericas_osm_path = 'ubicaciones_genericas/ubicaciones_genericas_osm.csv',campos_genericos1=c("Localidad","Calle","Número"),campos_genericos2=c("Partido","Localidad","Calle","Número"),prefijo='ARGENTINA',id_column='IDEVENTOCASO',apikey  = readLines('apikey.txt'),write.it=T,verbose=T,timeout=5,texto_a_eliminar=c('*SIN DATO* (*SIN DATO*)','NULL'),lonlat_columns_ggmap=c('LON_RESIDENCIA','LAT_RESIDENCIA'),lonlat_columns_osm=c('LON_RESIDENCIA_OSM','LAT_RESIDENCIA_OSM')){
   inputGGMAP = sub('.csv','_georrefGGMAP.csv',inputArchivo)
   inputOSM = sub('.csv','_georrefOSM.csv',inputArchivo)

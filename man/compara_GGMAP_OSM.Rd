@@ -10,7 +10,7 @@ compara_GGMAP_OSM(inputArchivo = "bases/Base_p_ariel_y_yamila.csv",
   lonlat_columns_ggmap = c("LON_RESIDENCIA", "LAT_RESIDENCIA"),
   lonlat_columns_osm = c("LON_RESIDENCIA_OSM", "LAT_RESIDENCIA_OSM"),
   max_dist = 1000, id_column = "IDEVENTOCASO", na.value = FALSE,
-  verbose = T)
+  write.it = T, verbose = T, mapa_check = F)
 }
 \arguments{
 \item{inputArchivo}{Path a partir del cual construir los paths para ggmap y osm. El archivo que fue usado para construirlos.}
@@ -33,7 +33,11 @@ compara_GGMAP_OSM(inputArchivo = "bases/Base_p_ariel_y_yamila.csv",
 
 \item{na.value}{Como consideran en terminos de puntaje aquellos checkeos que hayan dado NA. Por default, es FALSE}
 
+\item{write.it}{Se deben escribir los archivos? Por default TRUE}
+
 \item{verbose}{Boleano ¿Debe imprimirse el progreso? Por default TRUE}
+
+\item{mapa_check}{Si es TRUE, guarda también un mapa generado con leaflet con los casos y colores según su calidad.}
 
 \item{peso_hospital}{El peso asociado a los distintos checkeos.}
 }

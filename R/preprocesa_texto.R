@@ -3,6 +3,7 @@
 #' @param texto El vector con los campos a procesar
 #' @param remueve.post.entre Si es igual a TRUE, remueve todo el texto que aparezca después de una expresión asociada a "ENTRE"
 #' @return El vector, ya preprocesado.
+#' @export
 preprocesa_texto = function(texto,remueve.post.entre=F){
   require(stringr)
   texto = toupper(texto)

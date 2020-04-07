@@ -4,6 +4,7 @@
 #' @param ubicaciones_genericas_path El path hacia el archivo de ubicaciones genericas. Si no existe, se creará en ese lugar el archivo nuevo.
 #' @param apikey La clave api para las busquedas en google. Por default, espera que se encuentre en un archivo llamado "apikey.txt"
 #' @return Un data frame con las ubicaciones genericas cargadas
+#' @export
 actualiza_ubicaciones_genericas_ggmap = function(loc_genericas,ubicaciones_genericas_path='ubicaciones_genericas_ggmap.csv',apikey=readLines('apikey.txt')){
   require(stringr)
   ubicaciones_genericas_ggmap = NULL

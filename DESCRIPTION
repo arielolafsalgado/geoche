@@ -1,11 +1,11 @@
 Package: geoche
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Georreferenciacion Validada por Multiples Búsquedas y Poligonos Espaciales
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author: Ariel Salgado
+Maintainer: Ariel Salgado <asalgado@df.uba.ar>
+Description: Este paquete fue diseñado para validar georreferenciaciones realizadas mediante ggmap y tmaptools, teniendo en cuenta la geografía de la región de búsqueda a través de poligonos geoespaciales.
+Depends: ggmap, tmaptools, sf, stringr
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true

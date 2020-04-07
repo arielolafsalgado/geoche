@@ -6,7 +6,10 @@
 #' @param id_column La columna en base a la cual matchear casos en ambos datasets
 #' @param ... Se pasa a read.csv
 #' @return El dataset combinado, como data.frame.
-combina_bases = function(inputArchivo1,inputArchivo2,outputArchivo=paste(sub('.csv','',inputArchivo1),inputArchivo2,sep='_pegado_'),id_column='IDEVENTOCASO',...){
+#' @export
+combina_bases = function(inputArchivo1,inputArchivo2,outputArchivo=NULL,id_column='IDEVENTOCASO',...){
+  require(stringr)
+  if(is.null(outputArchivo)) outputArchivo = paste(sub('.csv','',inputArchivo1),gsub('.*/','',inputArchivo2),sep='_pegado_')
   b1 = read.csv(inputArchivo1,stringsAsFactors=F,...)
   b2 = read.csv(inputArchivo2,stringsAsFactors=F,...)
   b2 = b2[!is.element(b2[,id_column],b1[,id_column])]

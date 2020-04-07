@@ -8,6 +8,7 @@
 #' @param id_column Columna para vincular los casos en data_ggmap con los casos en data_osm. Por default IDEVENTOCASO
 #' @param verbose Boleano ¿Debe imprimirse el progreso? Por default TRUE
 #' @return Un data frame identico a data_osm, pero que también contiene una columna con TRUE,FALSE,NA segun cumpla o no el criterio, o no se haya podido checkear.
+#' @export
 check_provincia_osm = function(data_osm,data_ggmap,provincias,prov_id_column='ID_PROV_INDEC_RESIDENCIA',lonlat_columns=c('LON_RESIDENCIA_OSM','LAT_RESIDENCIA_OSM'),verbose=T,id_column='IDEVENTOCASO'){
   data_osm$LAT_LON_EN_PROVINCIA = NA
   for(row_osm in 1:nrow(data_osm)){

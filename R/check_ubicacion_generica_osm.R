@@ -9,6 +9,7 @@
 #' @param text_a_eliminar El texto a ser eliminado en la construcción de las ubicaciones genericas. Por default c('*SIN DATO* (*SIN DATO*)','NULL')
 #' @param verbose Boleano ¿Debe imprimirse el progreso? Por default TRUE
 #' @return El mismo data frame, pero con una columna nueva que indica si pasó el check
+#' @export
 check_ubicacion_generica_osm = function(data_osm,data_ggmap,ubicaciones_genericas_osm,campos_genericos1,campos_genericos2,lonlat_columns=c('LON_RESIDENCIA_OSM','LAT_RESIDENCIA_OSM'),texto_a_eliminar=c('*SIN DATO* (*SIN DATO*)','NULL'),verbose=T){
   data_osm$MATCH_GENERICO = NA
   for(row_osm in 1:nrow(data_osm)){
@@ -30,10 +31,10 @@ check_ubicacion_generica_osm = function(data_osm,data_ggmap,ubicaciones_generica
       busqueda2 = gsub('(, )\\1+', '\\1', busqueda2)
       busqueda1 = toupper(gsub(', $','',busqueda1))
       busqueda2 = toupper(gsub(', $','',busqueda2))
-      match_ids = agrep(busqueda1,ubicaciones_genericas_ggmap$BUSQUEDA,ignore.case = T)
-      match_ids = unique(c(match_ids,agrep(busqueda2,ubicaciones_genericas_ggmap$BUSQUEDA,ignore.case = T)))
+      match_ids = agrep(busqueda1,ubicaciones_genericas_osm$BUSQUEDA,ignore.case = T)
+      match_ids = unique(c(match_ids,agrep(busqueda2,ubicaciones_genericas_osm$BUSQUEDA,ignore.case = T)))
       if(length(match_ids)>0){
-        match_generico = ubicaciones_genericas_ggmap$lon[match_ids]==latlon[1] & ubicaciones_genericas_ggmap$lat[match_ids]==latlon[2]
+        match_generico = ubicaciones_genericas_osm$lon[match_ids]==latlon[1] & ubicaciones_genericas_osm$lat[match_ids]==latlon[2]
         result = any(match_generico)
       }else{
         result = FALSE

@@ -8,6 +8,7 @@
 #' @param write.it Debe escribirse el resultado? Por default TRUE
 #' @param verbose Boleano, ¿debe indicarse el resultado? Por default TRUE
 #' @return Devuelve el dataset con las columnas agregadas.
+#' @export
 georreferencia_ggmap = function(inputArchivo = sub('.csv','_recortados.csv','bases/francoA/ListadoA.csv'),campos_a_domicilio=c("Localidad","Calle","Número"),prefijo_domicilio='ARGENTINA',apikey  = readLines('apikey.txt'),sep=',',write.it=T,verbose=T){
   require(stringr)
   require(ggmap)

@@ -9,6 +9,7 @@
 #' @param max_dist La máxima distancia aceptable puede estar una ubicacion de las otras
 #' @param id_column Columna para vincular data_ggmap con data_osm. Por default IDEVENTOCASO
 #' @return Un vector de longitud igual al numero de filas considerado, indicando lejos de cuantos puntos se encontraba cada ubicacion.
+#' @export
 calcula_consistencia_distancia = function(data_ggmap,data_osm,row_ggmap,row_osm,lonlat_columns_ggmap,lonlat_columns_osm,id_column,max_dist){
   if(all(!is.na(data_ggmap[row_ggmap,lonlat_columns_ggmap]))){
     sf_ggmap = st_as_sf(data_ggmap[row_ggmap,],coords=lonlat_columns_ggmap,crs=4326)
