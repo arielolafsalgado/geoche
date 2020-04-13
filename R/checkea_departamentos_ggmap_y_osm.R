@@ -23,7 +23,7 @@ checkea_departamentos_ggmap_y_osm = function(inputArchivo = 'bases/Base_p_ariel_
 
   ## RESUMEN
   if(verbose){
-    print(paste('RESUMEN SCRIPT 3:'))
+    print(paste('RESUMEN DEPARTAMENTOS:'))
     print('El punto estaba dentro del departamento (GGMAP)?')
     print(table(data_ggmap$LAT_LON_EN_DEPARTAMENTO,useNA="ifany"))
     print('El punto estaba dentro del departamento (OSM)?')

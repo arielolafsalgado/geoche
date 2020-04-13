@@ -35,7 +35,7 @@ check_ubicacion_generica_ggmap_y_osm = function(inputArchivo = sub('.csv','_reco
   }
   #BALANCE
   if(verbose){
-    print('RESUMEN SCRIPT 4:')
+    print('RESUMEN UBICACIONES GENERICAS:')
     print('GGMAP DIO UBICACIONES GENERICAS?')
     print(table(data_ggmap$MATCH_GENERICO,useNA='ifany'))
     print('OSM DIO UBICACIONES GENERICAS?')

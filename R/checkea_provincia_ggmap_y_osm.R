@@ -23,7 +23,7 @@ checkea_provincia_ggmap_y_osm = function(inputArchivo = 'bases/Base_p_ariel_y_ya
 
   ## RESUMEN
   if(verbose){
-    print(paste('RESUMEN SCRIPT 3:'))
+    print(paste('RESUMEN PROVINCIAS:'))
     print('El punto estaba dentro de la pronvincia (GGMAP)?')
     print(table(data_ggmap$LAT_LON_EN_PROVINCIA,useNA="ifany"))
     print('El punto estaba dentro de la pronvincia (OSM)?')

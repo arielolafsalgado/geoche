@@ -26,7 +26,7 @@ checkea_clinica_ggmap_y_osm = function(inputArchivo = 'bases/Base_p_ariel_y_yami
 
   ## RESUMEN
   if(verbose){
-    print('RESUMEN SCRIPT 5:')
+    print('RESUMEN CLINICAS:')
     print('En datos GGMAP, estaban cerca de su clinica:')
     print(table(data_ggmap$CERCA_CLINICA,useNA='ifany'))
     print('En datos OSM, estaban cerca de su clinica:')

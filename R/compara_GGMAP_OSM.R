@@ -114,7 +114,7 @@ compara_GGMAP_OSM = function(inputArchivo = 'bases/Base_p_ariel_y_yamila.csv',pe
   }
 
   if(verbose){
-    print('RESUMEN SCRIPT 6:')
+    print('RESUMEN COMPARACION:')
     print(paste('ELEGIDOS GGMAP:',sum(data_check$COMPARACION_ELECTO=='GGMAP')))
     print(paste('ELEGIDOS OSM:',sum(data_check$COMPARACION_ELECTO=='OSM')))
     print(paste('ELEGIDOS GGMAP:',sum(data_check$COMPARACION_ELECTO=='GGMAP')))
