@@ -12,11 +12,11 @@
 georreferencia_osm = function(inputArchivo = sub('.csv','_recortados.csv','bases/francoA/ListadoA.csv'),id_column='IDEVENTOCASO',campos_a_domicilio=c("Localidad","Calle","Número"),campos_a_domicilio2=c("Partido","Localidad","Calle","Número"),prefijo_domicilio='ARGENTINA',sep=',',write.it=T,verbose=T,timeout=5){
   require(stringr)
   datos = read.csv(inputArchivo,stringsAsFactors=F,sep=sep)
-  campos_a_domicilio_no_estan = campos_a_domicilio[!is.element(campos_a_domicilio),colnames(datos)]
+  campos_a_domicilio_no_estan = campos_a_domicilio[!is.element(campos_a_domicilio,colnames(datos))]
   if(length(campos_a_domicilio_no_estan)>0){
     print(paste('Warning: Los campos',paste(campos_a_domicilio_no_estan,collapse=', '),'no estan en el dataset. Continuando con los que si estan'))
   }
-  campos_a_domicilio = campos_a_domicilio[is.element(campos_a_domicilio),colnames(datos)]
+  campos_a_domicilio = campos_a_domicilio[is.element(campos_a_domicilio,colnames(datos))]
   if(length(campos_a_domicilio)>0){
     loc_domicilio = genera_loc_domicilios(datos,campos_a_domicilio,prefijo=prefijo_domicilio)
     output_dom = geocode_OSM_ariel(loc_domicilio = loc_domicilio,timeout=timeout)

@@ -14,11 +14,11 @@ georreferencia_ggmap = function(inputArchivo = sub('.csv','_recortados.csv','bas
   require(ggmap)
   register_google(key = apikey)
   datos = read.csv(inputArchivo,stringsAsFactors=F,sep=sep)
-  campos_a_domicilio_no_estan = campos_a_domicilio[!is.element(campos_a_domicilio),colnames(datos)]
+  campos_a_domicilio_no_estan = campos_a_domicilio[!is.element(campos_a_domicilio,colnames(datos))]
   if(length(campos_a_domicilio_no_estan)>0){
     print(paste('Warning: Los campos',paste(campos_a_domicilio_no_estan,collapse=', '),'no estan en el dataset. Continuando con los que si estan'))
   }
-  campos_a_domicilio = campos_a_domicilio[is.element(campos_a_domicilio),colnames(datos)]
+  campos_a_domicilio = campos_a_domicilio[is.element(campos_a_domicilio,colnames(datos))]
   if(length(campos_a_domicilio)>0){
     loc_domicilio = genera_loc_domicilios(datos,campos_a_domicilio,sep = ', ',prefijo = prefijo_domicilio)
     latlon_google = geocode(loc_domicilio)

@@ -17,6 +17,8 @@ calcula_consistencia_columna(data_ggmap, data_osm, row_ggmap, row_osm,
 \item{row_osm}{Las filas de data_osm asociadas a row_ggmap}
 
 \item{na.value}{Como consideran en terminos de puntaje aquellos checkeos que hayan dado NA. Por default, es FALSE}
+
+\item{columna}{La columna en la cual calcular consistencia}
 }
 \value{
 Un vector con TRUE y FALSE según si pasó o no el criterio. En caso de ser NA se asigna na.value

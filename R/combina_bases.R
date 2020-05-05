@@ -12,7 +12,7 @@ combina_bases = function(inputArchivo1,inputArchivo2,outputArchivo=NULL,id_colum
   if(is.null(outputArchivo)) outputArchivo = paste(sub('.csv','',inputArchivo1),gsub('.*/','',inputArchivo2),sep='_pegado_')
   b1 = read.csv(inputArchivo1,stringsAsFactors=F,...)
   b2 = read.csv(inputArchivo2,stringsAsFactors=F,...)
-  b2 = b2[!is.element(b2[,id_column],b1[,id_column])]
+  b2 = b2[!is.element(b2[,id_column],b1[,id_column]),]
   for(cn in colnames(b1)){
     if(!is.element(cn,colnames(b2))){
       b2[,cn] = NA

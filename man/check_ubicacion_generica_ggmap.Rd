@@ -18,11 +18,11 @@ check_ubicacion_generica_ggmap(data_ggmap, ubicaciones_genericas_ggmap,
 
 \item{campos_genericos2}{Los campos a partir de los cuales reconstruir la ubicación generica, en una segunda versión}
 
+\item{texto_a_eliminar}{El texto a ser eliminado en la construcción de las ubicaciones genericas. Por default c('*SIN DATO* (*SIN DATO*)','NULL')}
+
 \item{verbose}{Boleano ¿Debe imprimirse el progreso? Por default TRUE}
 
 \item{lolat_columns}{Las columnas en las que se encuentras las ubicaciones lon y lat}
-
-\item{text_a_eliminar}{El texto a ser eliminado en la construcción de las ubicaciones genericas. Por default c('*SIN DATO* (*SIN DATO*)','NULL')}
 }
 \value{
 El mismo data frame, pero con una columna nueva que indica si pasó el check

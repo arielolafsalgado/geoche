@@ -5,7 +5,7 @@
 #' @param campos_genericos1 Los campos a partir de los cuales reconstruir la ubicación generica
 #' @param campos_genericos2 Los campos a partir de los cuales reconstruir la ubicación generica, en una segunda versión
 #' @param lolat_columns Las columnas en las que se encuentras las ubicaciones lon y lat
-#' @param text_a_eliminar El texto a ser eliminado en la construcción de las ubicaciones genericas. Por default c('*SIN DATO* (*SIN DATO*)','NULL')
+#' @param texto_a_eliminar El texto a ser eliminado en la construcción de las ubicaciones genericas. Por default c('*SIN DATO* (*SIN DATO*)','NULL')
 #' @param verbose Boleano ¿Debe imprimirse el progreso? Por default TRUE
 #' @return El mismo data frame, pero con una columna nueva que indica si pasó el check
 #' @export

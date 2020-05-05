@@ -10,7 +10,9 @@ compara_GGMAP_OSM(inputArchivo = "bases/Base_p_ariel_y_yamila.csv",
   lonlat_columns_ggmap = c("LON_RESIDENCIA", "LAT_RESIDENCIA"),
   lonlat_columns_osm = c("LON_RESIDENCIA_OSM", "LAT_RESIDENCIA_OSM"),
   max_dist = 1000, id_column = "IDEVENTOCASO", na.value = FALSE,
-  write.it = T, verbose = T, mapa_check = F)
+  write.it = T, verbose = T, mapa_check = F,
+  columna_depto = "DEPARTAMENTO_RESIDENCIA",
+  columna_prov = "PROVINCIA_RESIDENCIA")
 }
 \arguments{
 \item{inputArchivo}{Path a partir del cual construir los paths para ggmap y osm. El archivo que fue usado para construirlos.}
@@ -38,6 +40,10 @@ compara_GGMAP_OSM(inputArchivo = "bases/Base_p_ariel_y_yamila.csv",
 \item{verbose}{Boleano ¿Debe imprimirse el progreso? Por default TRUE}
 
 \item{mapa_check}{Si es TRUE, guarda también un mapa generado con leaflet con los casos y colores según su calidad.}
+
+\item{columna_depto}{Columna con los departamentos. Default: 'DEPARTAMENTO_RESIDENCIA'}
+
+\item{columna_prov}{Columna con las provincias. Default:'PROVINCIA_RESIDENCIA'}
 
 \item{peso_hospital}{El peso asociado a los distintos checkeos.}
 }

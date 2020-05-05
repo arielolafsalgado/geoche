@@ -12,11 +12,13 @@
 #' @param id_column Columna para vincular data_ggmap con data_osm. Por default IDEVENTOCASO
 #' @param na.value Como consideran en terminos de puntaje aquellos checkeos que hayan dado NA. Por default, es FALSE
 #' @param verbose Boleano ¿Debe imprimirse el progreso? Por default TRUE
+#' @param columna_depto Columna con los departamentos. Default: 'DEPARTAMENTO_RESIDENCIA'
+#' @param columna_prov Columna con las provincias. Default:'PROVINCIA_RESIDENCIA'
 #' @param write.it Se deben escribir los archivos? Por default TRUE
 #' @param mapa_check Si es TRUE, guarda también un mapa generado con leaflet con los casos y colores según su calidad.
 #' @return Un data frame con la ubicacion elegida para cada caso, indicando el puntaje que obtuvo y de donde proviene, así como el agregado de la ubicación de la clinica.
 #' @export
-compara_GGMAP_OSM = function(inputArchivo = 'bases/Base_p_ariel_y_yamila.csv',peso_hospital=10,peso_generico=1,peso_provincia=1,peso_departamento=1,peso_distancia=1,puntaje_de_corte=-5,lonlat_columns_ggmap=c('LON_RESIDENCIA','LAT_RESIDENCIA'),lonlat_columns_osm=c('LON_RESIDENCIA_OSM','LAT_RESIDENCIA_OSM'),max_dist=1000,id_column='IDEVENTOCASO',na.value=FALSE,write.it=T,verbose=T,mapa_check=F){
+compara_GGMAP_OSM = function(inputArchivo = 'bases/Base_p_ariel_y_yamila.csv',peso_hospital=10,peso_generico=1,peso_provincia=1,peso_departamento=1,peso_distancia=1,puntaje_de_corte=-5,lonlat_columns_ggmap=c('LON_RESIDENCIA','LAT_RESIDENCIA'),lonlat_columns_osm=c('LON_RESIDENCIA_OSM','LAT_RESIDENCIA_OSM'),max_dist=1000,id_column='IDEVENTOCASO',na.value=FALSE,write.it=T,verbose=T,mapa_check=F,columna_depto='DEPARTAMENTO_RESIDENCIA',columna_prov='PROVINCIA_RESIDENCIA'){
   inputGGMAP = sub('.csv','_georrefGGMAP.csv',inputArchivo)
   inputOSM = sub('.csv','_georrefOSM.csv',inputArchivo)
   data_ggmap = read.csv(inputGGMAP,stringsAsFactors=F)
@@ -80,15 +82,35 @@ compara_GGMAP_OSM = function(inputArchivo = 'bases/Base_p_ariel_y_yamila.csv',pe
     }
   }
 
-  data_check$LAT_RESIDENCIA_MEJOR = data_check$LAT_RESIDENCIA
-  data_check$LON_RESIDENCIA_MEJOR = data_check$LON_RESIDENCIA
+  data_check$LAT_GEOCHE = data_check$LAT_RESIDENCIA
+  data_check$LON_GEOCHE = data_check$LON_RESIDENCIA
+  data_check$LAT_RESIDENCIA = NULL
+  data_check$LON_RESIDENCIA = NULL
+  if(is.element(columna_depto,colnames(data_check))){
+    data_check$DEPTO_GEOCHE = data_check[,columna_depto]
+  }else{
+    print('columna_depto incorrecta, colocando NA')
+    data_check$DEPTO_GEOCHE = NA
+  }
+  if(is.element(columna_prov,colnames(data_check))){
+    data_check$PROV_GEOCHE = data_check[,columna_prov]
+  }else{
+    print('columna_prov incorrecta, colocando NA')
+    data_check$PROV_GEOCHE = NA
+  }
   if(all(!is.null(data_check$CERCA_CLINICA))){
     data_check$LATLON_DE_CLINICA = FALSE
     for(row_check in 1:nrow(data_check)){
       if(data_check$COMPARACION_PUNTAJE[row_check]<=puntaje_de_corte){
-        data_check$LAT_RESIDENCIA[row_check] = data_check$LAT_CLINICA[row_check]
-        data_check$LON_RESIDENCIA[row_check] = data_check$LON_CLINICA[row_check]
-        data_check$LATLON_DE_CLINICA[row_check] =  TRUE
+        if(all(!is.null(data_check$CERCA_CLINICA))){
+          if((!is.na(data_check$CERCA_CLINICA[row_check]) & !data_check$CERCA_CLINICA[row_check]) |
+              (is.na(data_check$CERCA_CLINICA[row_check]) & !is.na(data_check$LAT_CLINICA[row_check]) & is.na(data_check$LAT_GEOCHE[row_check]))
+                ){
+            data_check$LAT_GEOCHE[row_check] = data_check$LAT_CLINICA[row_check]
+            data_check$LON_GEOCHE[row_check] = data_check$LON_CLINICA[row_check]
+            data_check$LATLON_DE_CLINICA[row_check] =  TRUE
+          }
+        }
       }
     }
   }
@@ -127,7 +149,7 @@ compara_GGMAP_OSM = function(inputArchivo = 'bases/Base_p_ariel_y_yamila.csv',pe
     require(leaflet)
     map = leaflet() %>% addProviderTiles(providers$OpenStreetMap)
     markerColors = c('BUENA'='green','MEDIA'='yellow','BAJA'='red')
-    map = map %>% addCircles(data=data_check,lat=~LAT_RESIDENCIA_MEJOR,lng = ~LON_RESIDENCIA,popup= ~paste('ID:', IDEVENTOCASO,'- BUSQUEDA:', BUSQUEDA_RESIDENCIA,'- CONFIABILIDAD:',CONFIABILIDAD, '- EN PROVINCIA', LAT_LON_EN_PROVINCIA, '- PUNTAJE:',COMPARACION_PUNTAJE,' - ID:',IDEVENTOCASO),color=~as.character(markerColors[CONFIABILIDAD]))
+    map = map %>% addCircles(data=data_check,lat=~LAT_GEOCHE,lng = ~LON_GEOCHE,popup= ~paste('ID:', IDEVENTOCASO,'- BUSQUEDA:', BUSQUEDA_RESIDENCIA,'- CONFIABILIDAD:',CONFIABILIDAD, '- PUNTAJE:',COMPARACION_PUNTAJE,' - ID:',IDEVENTOCASO),color=~as.character(markerColors[CONFIABILIDAD]))
     map = map %>% addLegend(position = 'topright',labels = names(markerColors),colors = as.character(markerColors))
     result = list('dataset'=data_check,'map'=map)
   }
