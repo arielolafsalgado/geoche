@@ -52,10 +52,13 @@ previo y posterior de la información que se emplea y se obtiene.
 ## PASOS PARA LA GEORREFERENCIACION.
 El código del paquete se acompaña con varios scripts modelo, para dar una base de como usar el paquete. El proceso de georreferenciación
 propuesto consta de 6 pasos.
-- El primer paso corresponde con georreferenciar los domicilios usando el API de GOOGLEMAPS (a través del paquete ::ggmap:: y el API de 
-
-
-
+- El primer paso corresponde con georreferenciar los domicilios usando el API de GOOGLEMAPS (a través del paquete *ggmap* y el API de OPENS STREET MAPS (a través del paquete *tmaptools*). La función de geocoding de *ggmap* retorna un único punto para cada *query* (búsqueda), mientras que la de *tmaptools* permite obtener varios resultados para una misma *query*. Los resultados de estas georreferenciaciones son guardados en dos archivos csv, que se van actualizando en los siguientes pasos.
+- Los siguientes pasos constan de chequeos posibles de ser realizados:
+  * Paso 2: Si se cuenta con información de los departamentos, se puede chequear que la ubicación encontrada esté en el departamento.  
+  * Paso 3: Si se cuenta con información de la provincia, se puede chequear que la ubicación encontrada esté en la provincia.
+  * Paso 4: Si se cuenta con información de el hospital en el que se atendió la persona, se puede chequear que la dirección esté dentro de cierta distancia máxima al hospital. A futuro, esta opción representará distancia a una ubicación genérica que sea de interés para el usuario. En ambos casos, el poligono con los hospitales (en formato shp) debería ser provisto por el usuario.
+  * Paso 5: Se checkea que la ubicación obtenida no corresponda con una ubicación genérica equivalente a no poner la dirección exacta (con calle y número) sino solo una formada por un subconjunto de los datos (por ejemplo, solo pais y provincia). Este checkeo surge del hecho de que a veces los geocoders, al no encontrar el resultado, retornan algun resultado de búsqueda por default.
+  * Paso 6: Compara entre las ubicaciones obtenidas, y se queda con la ubicación que más criterios haya pasado. Además, se incorpora un criterio extra que se basa en la coherencia interna de las georreferenciaciones: todos los resultados deberían estar dentro de un radio. Resultados que se encuentren muy alejados, son penalizados. Ubicaciones con puntaje perfecto son tomadas como _buenas_. Ubicaciones con varias fallas pueden ser _medias_ o _malas_, en base a un criterio establecido por el usuario en base al nivel de penalización para cada falla.
 
 
 
