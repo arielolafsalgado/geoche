@@ -14,6 +14,14 @@ The result consists in a series of new columns in the dataset, indicating the re
 
 # Instalacion
 
+**geoche** requiere para funciona tener instalados los paquetes **ggmap**, **tmaptools**, **sf**, **stringr**.
+
+```
+install.packages(c('sf','ggmap','tmaptools','stringr'))
+```
+
+Ademaś, para georreferencia usando el API de google se necesita una clave API, obtenible a través de una cuenta en google cloud https://cloud.google.com/
+
 Clone el repositorio en su disco, y desde dentro de la carpeta _geoche_
 corra desde **R** `devtools::install()`
 
