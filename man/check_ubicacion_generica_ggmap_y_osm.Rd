@@ -4,8 +4,8 @@
 \alias{check_ubicacion_generica_ggmap_y_osm}
 \title{Comprueba que las ubicaciones obtenidas no sean genericas}
 \usage{
-check_ubicacion_generica_ggmap_y_osm(inputArchivo = sub(".csv",
-  "_recortados.csv", "bases/francoA/ListadoA.csv"),
+
+  check_ubicacion_generica_ggmap_y_osm(inputArchivo = "bases/ejemplo/ejemplo.csv",
   ubicaciones_genericas_ggmap_path = "ubicaciones_genericas/ubicaciones_genericas_ggmap.csv",
   ubicaciones_genericas_osm_path = "ubicaciones_genericas/ubicaciones_genericas_osm.csv",
   campos_genericos1 = c("Localidad", "Calle", "Número"),

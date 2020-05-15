@@ -9,7 +9,7 @@
 #' @param verbose Boleano, ¿debe indicarse el resultado? Por default TRUE
 #' @return Devuelve el dataset con las columnas agregadas.
 #' @export
-georreferencia_ggmap = function(inputArchivo = sub('.csv','_recortados.csv','bases/francoA/ListadoA.csv'),campos_a_domicilio=c("Localidad","Calle","Número"),prefijo_domicilio='ARGENTINA',apikey  = readLines('apikey.txt'),sep=',',write.it=T,verbose=T){
+georreferencia_ggmap = function(inputArchivo = "bases/ejemplo/ejemplo.csv",campos_a_domicilio=c("Localidad","Calle","Número"),prefijo_domicilio='ARGENTINA',apikey  = readLines('apikey.txt'),sep=',',write.it=T,verbose=T){
   require(stringr)
   require(ggmap)
   register_google(key = apikey)
@@ -28,7 +28,7 @@ georreferencia_ggmap = function(inputArchivo = sub('.csv','_recortados.csv','bas
     if(write.it) write.csv(datos,sub('.csv','_georrefGGMAP.csv',inputArchivo),row.names=F)
     if(verbose){
       print('GEORREFERENCIACION GGMAP:')
-      print(paste('SE ENCONTRARON',!is.na(latlon_google$lat),'UBICACIONES'))
+      print(paste('SE ENCONTRARON',sum(!is.na(latlon_google$lat)),'UBICACIONES'))
       print('CADA UNA PARA UN CASO DISTINTO')
       print(paste('% DE CASOS CON UNA UBICACION:',round(sum(!is.na(latlon_google$lat))/nrow(datos),3)*100))
       if(length(campos_a_domicilio_no_estan)>0){

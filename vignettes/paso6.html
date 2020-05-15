@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Ariel Salgado" />
+
+
+<title>Paso 6: Compara resultados</title>
+
+
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Paso 6: Compara resultados</h1>
+<h4 class="author">Ariel Salgado</h4>
+<h4 class="date">15/5/2020</h4>
+
+
+
+<p>## <em>PREAMBULO</em> En este sexto paso, lo que haremos es comparar los resultados de las distintas búsquedas realizadas, basandose en los resultados de los pasos 2 a 5. Para esto, se deben especificar una serie de pesos que miden la importancia relativa de cada checkeo, así como un puntaje de corte a partir del cual el punto georreferenciado es considerado <em>malo</em>.</p>
+<div id="paso-6-compara-resultados" class="section level2">
+<h2><em>PASO 6: COMPARA RESULTADOS</em></h2>
+<p>Comenzamos cargando el paquete y indicando el archivo de entrada, al igual que la columna con IDs.</p>
+<pre><code>require(geoche)
+inputArchivo = 'bases/ejemplo/ejemplo.csv'
+id_column='IDEVENTOCASO'</code></pre>
+<p>Luego indicamos los pesos de las distintas medidas de consistencia</p>
+<pre><code>peso_departamento = 10
+peso_provincia = 10
+peso_generico = 1
+peso_hospital = 0
+peso_distancia = 1
+puntaje_de_corte = -4</code></pre>
+<p><code>peso_departamento</code> mide el peso del paso 2, <code>peso_provincia</code> el del paso 3, <code>peso_genérico</code> del 4, y <code>peso_hospital</code> del 5. <code>peso_distancia</code> mide el peso de la medida de consistencia interna entre las localizaciones georreferencias (explicado a continuación), y <code>puntaje_de_corte</code> indica el puntaje mínimo para que una ubicación no sea considerada <em>mala</em>. Fallar en cada uno de los criterios resta tantos puntos como el valor que se le haya dado al peso. Por ejemplo, no estar en el departamento restará 10 puntos, pero no estar cerca del hospital restará 0. De esta forma, no estar en el departamento o la provincia haría a la ubicación <em>mala</em> en este caso, pero ser genérica no, ni tampoco estar lejos del hospital.</p>
+<p>La consistencia interna entre las localizaciones en cuan cerca se encuentran entre sí. Por cada otra ubicación encontrada que se encuentre a más distancia que <code>max_dist</code> se restan <code>peso_distancia</code> puntos. De esta forma, si un domicilio tiene 4 posibles localizaciones, si tres de ellas se encuentran muy juntas y una distante, esa última de verá mucho más penalizada que el resto (aunque todas tienen cierto nivel de penalización). En el script especificamos <code>max_dist</code>:</p>
+<pre><code>max_dist = 1000 # Distancia en metros</code></pre>
+<p>En <code>na.value</code> indicamos como debe considerarse la ausencia de resultado en una categoría de checkeo. Esto podría ocurrir si, por ejemplo, no había un departamento asociado al domicilio, o si no se encontró el hospital indicado. <code>na.value=FALSE</code> hará que se considere como fallar el test, y <code>na.value=TRUE</code> como haber pasado el test.</p>
+<pre><code>na.value= FALSE</code></pre>
+<p>Dado que tenemos dos proveedores distintos para realizar georreferenciaciones, es posible asignar un ventaja inicial alguno de ellos. Esto se especifica con la variable <code>ventaja_ggmap</code>. Esta variable toma un valor, que puede ser positivo o negativo, o igual a cero, y que indica cuantos puntos extra (si es negativo, con cuantos puntos menos) cuenta la georreferenciación hecha con GOOGLE desde el el comienzo. En este caso tomamos:</p>
+<pre><code>ventaja_ggmap = 0</code></pre>
+<p>Por último, mediante <code>mapa.check</code> podemos solicitar un mapa generado en leaflet que sirva para visualizar el resultado. Con eso ya podemos correr la función.</p>
+<pre><code>mapa_check=T
+output = compara_GGMAP_OSM(inputArchivo,peso_hospital,peso_generico,peso_provincia,peso_departamento,peso_distancia,puntaje_de_corte,max_dist = max_dist,na.value = na.value,id_column = id_column,mapa_check = mapa_check)</code></pre>
+<p>Con esto se crea un tercer y último archivo como resultado de la georreferenciación, en el cual cada caso cuenta con una <code>LON_GEOCHE</code> y una <code>LAT_GEOCHE</code>, que representa la ubicación mejor puntuada, el puntaje de la misma, y una calificación <em>BUENA</em>, <em>MEDIA</em> o <em>MALA</em> basandose en ese puntaje y el valor de corte. Recuerde verificar la calidad de los resultados. Además de las columnas con puntajes y la calificación final, cuenta con columnas intermedias que permiten evaluar cuales checkeos pasó la ubicación.</p>
+<p>El resultado se guarda en un archivo con identico nombre al archivo input, pero con un sufijo agregado. En este caso, será <code>ejemplo_finalGGMAP_OSM.csv</code>. Además, tenemos un mapa en el que podemos ver el resultado en <code>output</code></p>
+<pre><code>print(output$map)</code></pre>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

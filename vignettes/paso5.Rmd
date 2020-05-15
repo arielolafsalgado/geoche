@@ -1,0 +1,34 @@
+---
+  title: 'Paso 4: ubicaciones genéricas'
+author: "Ariel Salgado"
+date: "15/5/2020"
+output: rmarkdown::html_vignette
+---
+  
+## *PREAMBULO*
+  En este quinto paso, lo que haremos es comprobar la distancia a un hospital de referencia, si este existiera. La lógica atras de esto es que si la ubicación está muy distante del punto de referencia, tiene más sentido asociarlo al punto de referencia que a otro. Nuevamente, necesitaremos un shp con las ubicaciones de estos puntos de referencia.
+
+## *PASO 5: *
+En este paso necesitamos especificar un archivo con las ubicaciones de referencia:
+```
+require(geoche)
+inputArchivo = 'bases/ejemplo/ejemplo.csv'
+hospitales_path = 'shp/hospitales/hospitales.shp'
+```
+
+Además, debemos indicar en qué columna del archivo input se encuentra la información de los puntos de referencia:
+```
+hospi_name_column='ESTABLECIMIENTO_CARGA'
+```
+Esta información será comparada con la columna _Nombre_ del archivo shape. En caso de no encontrar un match exacto, se realiza una comparación aproximada (util cuando son nombres de clinicas, pero en otro caso podrían ser códigos númericos, que se resolverían exitosamente con el match genérico).
+
+Debemos especificar una distancia máxima a la cual se debería encontrar la ubicación georreferenciada del punto de referencia:
+```
+max_distancia = 200*1000 # 200km
+```
+
+Y ya solo resta corre la funcion:
+```
+output = checkea_clinica_ggmap_y_osm(inputArchivo,hospitales_path,hospi_name_column,max_distancia = max_distancia)
+```
+

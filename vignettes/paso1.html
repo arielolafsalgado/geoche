@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Ariel Salgado" />
+
+
+<title>Paso 1: georreferenciacion</title>
+
+
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Paso 1: georreferenciacion</h1>
+<h4 class="author">Ariel Salgado</h4>
+<h4 class="date">15/5/2020</h4>
+
+
+
+<div id="preambulo" class="section level2">
+<h2><em>PREAMBULO</em></h2>
+<p>En este archivo presentaré como realizar el primero de los pasos: georreferenciar un grupo de casos. Para esto ud. deberá contar con el archivo <code>ejemplo.csv</code>. Si este no fue provisto con el paquete, pongase en contacto con el autor. Usted deberá escribir este archivos en un directorio de su elección, y trabajar con direcciones basadas en ese archivo. Recuerde que toda la lógica de este paquete al día actual se basa en trabajar con las direcciones de los archivos. Versiones futuras podrán incluir trabajar directamente con los <code>data.frame</code>.</p>
+</div>
+<div id="modelo-de-trabajo-para-el-primer-caso" class="section level2">
+<h2><em>Modelo de trabajo para el primer caso</em></h2>
+<p>Con el paquete y el archivo <code>ejemplo.csv</code> ud. debería haber sido provisto con una serie de scripts modelo. En este <em>vignette</em> trabajaremos con el script denominado <code>paso1.R</code>. La información que verá aquí estará basada en ese mismo script, y orientada a trabajar con el archivo <code>ejemplo.csv</code>.</p>
+</div>
+<div id="la-clave-api" class="section level2">
+<h2><em>La clave API</em></h2>
+<p>Si bien OPEN STREET MAP (OSM) provee de búsquedas de forma libre, no es el caso con GOOGLE. Ud. deberá contar con una clave API provista por GOOGLE en <a href="https://cloud.google.com/" class="uri">https://cloud.google.com/</a>. La misma deberá ser cargada en un archivo <code>apikey.txt</code>, preferiblemente en el mismo directorio que los scripts de ejemplo. En los ejemplos siguientes, se asumirá que se cuenta con dicha clave y que esta se encuentra ubicada al mismo nivel que los scripts.</p>
+</div>
+<div id="las-bases-de-datos" class="section level2">
+<h2><em>Las bases de datos</em></h2>
+<p>Se recomienda contar con una carpeta <code>bases</code> al mismo nivel que los scripts, y colocar el archivo <code>ejemplo.csv</code> en <code>bases/ejemplo/ejemplo.csv</code>. El proceso de georreferenciación crea varios archivos intermedios, y colocar todos estos en una carpeta separada facilitará la organización del trabajo. En lo siguiente, supondremos que los scripts y la carpeta base se encuentran en un directorio <code>trabajo</code>, que engloba todos los archivos que serán usados durante este tutorial.</p>
+</div>
+<div id="paso-1-georreferenciacion" class="section level2">
+<h2><em>PASO 1: GEORREFERENCIACION</em></h2>
+<p>Suponemos entonces contar con el script <code>trabajo/paso1.R</code>, la base <em>ejemplo</em> en <code>trabajo/bases/ejemplo/ejemplo.csv</code> y la clave API en <code>trabajo/apikey.txt</code>.</p>
+<p>Comenzamos cargando el paquete y la clave API</p>
+<pre><code>require(geoche)
+apikey  = readLines('apikey.txt')</code></pre>
+<p>Cargamos la dirección del archivo en la variable <code>inputArchivo</code></p>
+<pre><code>inputArchivo = 'bases/ejemplo/ejemplo.csv'</code></pre>
+<p>La función que georreferencia necesita saber las variables a partir de las cuales construirá el domicilio. Actualmente, usa un conjunto de variables para georreferenciar con GOOGLE y hasta 2 para OSM (siendo uno el mismo que con GOOGLE).</p>
+<p>Estos campos se especifican en las variables <code>campos_a_domicilio</code></p>
+<pre><code>campos_a_domicilio = c(&quot;PROVINCIA_RESIDENCIA&quot;,
+                       &quot;LOCALIDAD_RESIDENCIA&quot;,
+                       &quot;CALLE_DOMICILIO&quot;,
+                       &quot;NUMERO_DOMICILIO&quot;)
+
+campos_a_domicilio2 = c(&quot;PROVINCIA_RESIDENCIA&quot;,
+                       &quot;DEPARTAMENTO_RESIDENCIA&quot;,
+                       &quot;LOCALIDAD_RESIDENCIA&quot;,
+                       &quot;CALLE_DOMICILIO&quot;,
+                       &quot;NUMERO_DOMICILIO&quot;)</code></pre>
+<p>Ya que es bastante común que para todos los casos conozcamos cierta parte de la ubicación (como el país), se puede agregar un string a todos campos a ser buscados. <em>geoche</em> construye las busquedas pegando un campo a continuación de otro. Este string extra se agrega al principio. Por ejemplo, en este caso agregamos <em>ARGENTINA</em> al comienzo de todos los textos de búsqueda. Para poder seguir el rastro de que caso se relaciona con cuál en GOOGLE y OSM, también es necesario contar con una columna de IDs únicos para cada caso a georreferencia (aquí indicada en <code>id_column</code>. Por último, la variable <code>timeout</code> sirve para poner un límite de tiempo a las <em>queries</em> a OSM, que pueden llegar a demorarse mucho por problemas del servidor.</p>
+<pre><code>prefijo_domicilio = 'ARGENTINA'
+id_column = 'IDEVENTOCASO'
+timeout = 5</code></pre>
+<p>Esta información se la pasamos a una función que se ocupa de georreferenciar y generar dos archivos en el mismo directorio que <code>inputArchivo</code> (uno para GOOGLE y otro para OSM).</p>
+<pre><code>georreferencia_ggmap_y_osm(inputArchivo,campos_a_domicilio,campos_a_domicilio2,prefijo_domicilio,id_column,apikey,timeout,sep=',')</code></pre>
+<p>Algunas variables extra que pueden especificarse:</p>
+<ul>
+<li><code>sep</code> permite indicar el separador en el archivo <code>inputArchivo</code>.</li>
+<li><code>apikey</code> es la clave api (como texto) a ser usada.</li>
+<li><code>write.it</code> permite especificar si queremos que el resultado se escriba.</li>
+<li><code>verbose</code> permite indicar si queremos que se muestre información sobre el proceso de georreferenciado.</li>
+</ul>
+<p>Para más detalles, use <code>?georreferencia_ggmap_y_osm</code></p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

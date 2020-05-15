@@ -1,0 +1,59 @@
+---
+title: 'Paso 6: Compara resultados'
+author: "Ariel Salgado"
+date: "15/5/2020"
+output: rmarkdown::html_vignette
+---
+  
+  ## *PREAMBULO*
+  En este sexto paso, lo que haremos es comparar los resultados de las distintas búsquedas realizadas, basandose en los resultados de los pasos 2 a 5. Para esto, se deben especificar una serie de pesos que miden la importancia relativa de cada checkeo, así como un puntaje de corte a partir del cual el punto georreferenciado es considerado _malo_.
+
+## *PASO 6: COMPARA RESULTADOS*
+Comenzamos cargando el paquete y indicando el archivo de entrada, al igual que la columna con IDs.
+```
+require(geoche)
+inputArchivo = 'bases/ejemplo/ejemplo.csv'
+id_column='IDEVENTOCASO'
+```
+Luego indicamos los pesos de las distintas medidas de consistencia
+```
+peso_departamento = 10
+peso_provincia = 10
+peso_generico = 1
+peso_hospital = 0
+peso_distancia = 1
+puntaje_de_corte = -4
+```
+`peso_departamento` mide el peso del paso 2, `peso_provincia` el del paso 3, `peso_genérico` del 4, y `peso_hospital` del 5. `peso_distancia` mide el peso de la medida de consistencia interna entre las localizaciones georreferencias (explicado a continuación), y `puntaje_de_corte` indica el puntaje mínimo para que una ubicación no sea considerada _mala_. Fallar en cada uno de los criterios resta tantos puntos como el valor que se le haya dado al peso. Por ejemplo, no estar en el departamento restará 10 puntos, pero no estar cerca del hospital restará 0. De esta forma, no estar en el departamento o la provincia haría a la ubicación _mala_ en este caso, pero ser genérica no, ni tampoco estar lejos del hospital.
+
+La consistencia interna entre las localizaciones en cuan cerca se encuentran entre sí. Por cada otra ubicación encontrada que se encuentre a más distancia que `max_dist` se restan `peso_distancia` puntos. De esta forma, si un domicilio tiene 4 posibles localizaciones, si tres de ellas se encuentran muy juntas y una distante, esa última de verá mucho más penalizada que el resto (aunque todas tienen cierto nivel de penalización). En el script especificamos `max_dist`:
+```
+max_dist = 1000 # Distancia en metros
+```
+En ```na.value``` indicamos como debe considerarse la ausencia de resultado en una categoría de checkeo. Esto podría ocurrir si, por ejemplo, no había un departamento asociado al domicilio, o si no se encontró el hospital indicado. ```na.value=FALSE``` hará que se considere como fallar el test, y ```na.value=TRUE``` como haber pasado el test.
+
+```
+na.value= FALSE
+```
+Dado que tenemos dos proveedores distintos para realizar georreferenciaciones, es posible asignar un ventaja inicial alguno de ellos. Esto se especifica con la variable `ventaja_ggmap`. Esta variable toma un valor, que puede ser positivo o negativo, o igual a cero, y que indica cuantos puntos extra (si es negativo, con cuantos puntos menos) cuenta la georreferenciación hecha con GOOGLE desde el el comienzo. En este caso tomamos:
+
+```
+ventaja_ggmap = 0
+```
+
+Por último, mediante ```mapa.check``` podemos solicitar un mapa generado en leaflet que sirva para visualizar el resultado. Con eso ya podemos correr la función.
+
+```
+mapa_check=T
+output = compara_GGMAP_OSM(inputArchivo,peso_hospital,peso_generico,peso_provincia,peso_departamento,peso_distancia,puntaje_de_corte,max_dist = max_dist,na.value = na.value,id_column = id_column,mapa_check = mapa_check)
+```
+
+Con esto se crea un tercer y último archivo como resultado de la georreferenciación, en el cual cada caso cuenta con una ```LON_GEOCHE``` y una ```LAT_GEOCHE```, que representa la ubicación mejor puntuada, el puntaje de la misma, y una calificación _BUENA_, _MEDIA_ o _MALA_ basandose en ese puntaje y el valor de corte. Recuerde verificar la calidad de los resultados. Además de las columnas con puntajes y la calificación final, cuenta con columnas intermedias que permiten evaluar cuales checkeos pasó la ubicación. 
+
+El resultado se guarda en un archivo con identico nombre al archivo input, pero con un sufijo agregado. En este caso, será `ejemplo_finalGGMAP_OSM.csv`.
+Además, tenemos un mapa en el que podemos ver el resultado en `output`
+
+```
+print(output$map)
+```
+

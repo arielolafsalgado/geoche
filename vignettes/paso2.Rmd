@@ -1,0 +1,27 @@
+---
+title: 'Paso 2: checkeo por departamentos'
+author: "Ariel Salgado"
+date: "15/5/2020"
+output: rmarkdown::html_vignette
+---
+
+## *PREAMBULO*
+En este segundo paso, realizaremos un checkeo sobre la georreferenciación realizada en el paso anterior. La idea es aprovecharse de esta información para contrastar si el resultado es razonable. Los archivos con información sobre departamentos se espera que esten en formato shape (.shp), de forma de que sean leidos mediante el paquete *sf*. Con este tutorial se proveen archivos provistos por el INDEC que contienen los archivos shape de los departamentos y provincias.
+
+## *PASO 2: CHECKEO POR DEPARTAMENTOS*
+
+En este caso, el código es muy sencillo. Únicamente debemos cargar el paquete, el directorio en el cual se encuentra nuestro archivo base, y el directorio en el que se encuentran el archivo shape con los departamentos. Además, debemos indicar en qué columna se encuentra el ID asociado al departamento de cada caso a georreferenciar. Esta columna debe contener EXACTAMENTE los códigos presentes en una columna ```link``` en el archivo shape. La función realiza un matcheo EXACTO entre los argumento en la columna ```depto_id_column``` del archivo input y ```link``` del archivo shape.
+
+```
+require(geoche)
+inputArchivo = 'bases/ejemplo/ejemplo.csv'
+departamentos_path = 'shp/departamentos/censo_por_departamento_polígonos.shp'
+depto_id_column='ID_DEPTO_INDEC_RESIDENCIA'
+output = checkea_departamentos_ggmap_y_osm(inputArchivo,departamentos_path,depto_id_column)
+```
+
+En esta función existen varios parámetros que pueden modificarse, siendo los más relevantes:
+
+
+- `crs`: el sistema coordenado usado para buscar intersecciones. Por default 22185
+- `id_column`: Columna con los ids en el archivo OSM y archivo original. Por default, _IDEVENTOCASO_.

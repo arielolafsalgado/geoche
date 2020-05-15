@@ -9,3 +9,10 @@ El resultado se presenta como una serie de columnas adicionales en los datos, in
 
 This package was designed to validate geocodings in the context of the COVID-19 pandemic. It aims to geocode using two providers: google (provided by ggmap) and openstreetmap (provided by tmaptools). Also, it uses shape polygons referred to the geo political structure of the country (in Argentina, provided by the *INDEC*) to validate the obtained locations, comparing them to reference locations of each location's department, measures the distance to some reference places (in our case, clinical attention points) and checks for inner consistency between the different found points (ensuring that they are too far from each other).
 The result consists in a series of new columns in the dataset, indicating the result of each validation step, along with a location score. Based on a threshold score, each location is qualified as GOOD, MID or BAD,
+
+
+
+# Instalacion
+
+Clone el repositorio en su disco, y desde dentro de la carpeta _geoche_
+corra desde **R** `devtools::install()`

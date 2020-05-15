@@ -5,7 +5,7 @@
 \title{Comprueba consistencia entre la provincia y las posiciones georreferenciadas}
 \usage{
 
-  checkea_provincia_ggmap_y_osm(inputArchivo = "bases/Base_p_ariel_y_yamila.csv",
+  checkea_provincia_ggmap_y_osm(inputArchivo = "bases/ejemplo/ejemplo.csv",
   provincias_path = "shp/provincias/provincias.shp",
   prov_id_column = "ID_PROVINCIA",
   lonlat_columns_ggmap = c("LON_RESIDENCIA", "LAT_RESIDENCIA"),

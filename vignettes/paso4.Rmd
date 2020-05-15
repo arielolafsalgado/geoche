@@ -1,0 +1,41 @@
+---
+title: 'Paso 4: ubicaciones genéricas'
+author: "Ariel Salgado"
+date: "15/5/2020"
+output: rmarkdown::html_vignette
+---
+
+## *PREAMBULO*
+En este cuarto paso, lo que haremos es georreferenciar las llamadas _ubicaciones genericas_. Estas ubicaciones son las que los buscadores devuelven por default cuando buscamos una región grande, como una localidad o una provincia. El objetivo es comprobar que las ubicaciones que obtuvimos en el primer paso no sea _genericas_. Para esto, la función realiza dos pasos: primero construye las ubicaciones genéricas, las busca y las guarda en un archivo, y luego realiza el checkeo. Esto es útil porque en siguientes búsquedas se puede recurrir nuevamente a esta base con ubicaciones genéricas, de forma de ahorrar tiempo de búsquedas.
+
+## *PASO 4: *
+Cada buscador tiene su propio archivo de ubicaciones genéricas, por lo que contaremos con un archivo para *ggmap* (GOOGLE) y uno para *OSM*, ademas del archivo base. En caso de que estos archivos no existan, la funcion los creará. Sugerimos construir una carpeta para esto en `trabajo/ubicaciones_genericas`, de forma de poder recurrir a él independientemente de la búsqueda que realicemos.
+
+```
+require(geoche) 
+inputArchivo = 'bases/charla/charla.csv'
+ubicaciones_genericas_ggmap_path = 'ubicaciones_genericas/ubicaciones_genericas_ggmap.csv'
+ubicaciones_genericas_osm_path = 'ubicaciones_genericas/ubicaciones_genericas_osm.csv'
+```
+
+Al igual que en el paso 1, debemos especificar como construir las ubicaciones (qué campos usar):
+
+```
+campos_genericos1 = c("PROVINCIA_RESIDENCIA","LOCALIDAD_RESIDENCIA")
+campos_genericos2 = c("PROVINCIA_RESIDENCIA","DEPARTAMENTO_RESIDENCIA","LOCALIDAD_RESIDENCIA")
+```
+Podemos especificar nuevamente un texto prefijo, un tiempo limite para OSM y la clave api de google, además de la columna con los IDs.
+```
+prefijo = 'ARGENTINA'
+timeout = 5
+apikey = readLines("apikey.txt")
+id_column = 'IDEVENTOCASO'
+```
+
+Y ya solo resta hacer:
+
+```
+output = check_ubicacion_generica_ggmap_y_osm(inputArchivo,ubicaciones_genericas_ggmap_path,ubicaciones_genericas_osm_path,campos_genericos1,campos_genericos2,prefijo,id_column,apikey,timeout=timeout)
+```
+
+Esta función se ocupa de constuir las bases de ubicaciones genéricas, y de checkear en base a ellas si las ubicaciones encontradas en el paso 1 son genéricas o no.

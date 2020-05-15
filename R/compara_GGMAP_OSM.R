@@ -1,6 +1,7 @@
 #' Compara los resultados obtenidos con GGMAP y OSM y elige el mejor resultado
 #' @description La funcion genera im data frame con las posiciones exitosas de comparar GGMAP y OSM. Al final, la ubicación propuesta es acompañada de una etiqueta según su confiabilidad sea BUENA, MEDIA o BAJA.
 #' @param inputArchivo Path a partir del cual construir los paths para ggmap y osm. El archivo que fue usado para construirlos.
+#' @param ventaja_ggmap La ventaja inicial que lleva en puntos GOOGLE (puede ser cualquier numero, positivo o negativo). Por default, 1.
 #' @param peso_hospital El peso asociado al checkeo.
 #' @param peso_hospital El peso asociado a los distintos checkeos.
 #' @param peso_provincia El peso asociado a los distintos checkeos.
@@ -18,7 +19,7 @@
 #' @param mapa_check Si es TRUE, guarda también un mapa generado con leaflet con los casos y colores según su calidad.
 #' @return Un data frame con la ubicacion elegida para cada caso, indicando el puntaje que obtuvo y de donde proviene, así como el agregado de la ubicación de la clinica.
 #' @export
-compara_GGMAP_OSM = function(inputArchivo = 'bases/Base_p_ariel_y_yamila.csv',peso_hospital=10,peso_generico=1,peso_provincia=1,peso_departamento=1,peso_distancia=1,puntaje_de_corte=-5,lonlat_columns_ggmap=c('LON_RESIDENCIA','LAT_RESIDENCIA'),lonlat_columns_osm=c('LON_RESIDENCIA_OSM','LAT_RESIDENCIA_OSM'),max_dist=1000,id_column='IDEVENTOCASO',na.value=FALSE,write.it=T,verbose=T,mapa_check=F,columna_depto='DEPARTAMENTO_RESIDENCIA',columna_prov='PROVINCIA_RESIDENCIA'){
+compara_GGMAP_OSM = function(inputArchivo = "bases/ejemplo/ejemplo.csv",ventaja_ggmap=1,peso_hospital=10,peso_generico=1,peso_provincia=1,peso_departamento=1,peso_distancia=1,puntaje_de_corte=-5,lonlat_columns_ggmap=c('LON_RESIDENCIA','LAT_RESIDENCIA'),lonlat_columns_osm=c('LON_RESIDENCIA_OSM','LAT_RESIDENCIA_OSM'),max_dist=1000,id_column='IDEVENTOCASO',na.value=FALSE,write.it=T,verbose=T,mapa_check=F,columna_depto='DEPARTAMENTO_RESIDENCIA',columna_prov='PROVINCIA_RESIDENCIA'){
   inputGGMAP = sub('.csv','_georrefGGMAP.csv',inputArchivo)
   inputOSM = sub('.csv','_georrefOSM.csv',inputArchivo)
   data_ggmap = read.csv(inputGGMAP,stringsAsFactors=F)
@@ -30,7 +31,9 @@ compara_GGMAP_OSM = function(inputArchivo = 'bases/Base_p_ariel_y_yamila.csv',pe
   for(row_ggmap in 1:nrow(data_ggmap)){
     if(verbose) print(paste('Investigando fila',row_ggmap))
     row_osm = which(data_ggmap[row_ggmap,id_column]==data_osm[,id_column])  # Agarro las filas que corresponden al mismo caso
-    puntaje = c(1,rep(0,length(row_osm)))
+    puntaje = c(ventaja_ggmap,rep(0,length(row_osm)))
+    if(is.na(data_ggmap$LAT_RESIDENCIA[row_ggmap]))
+      puntaje = c(puntaje_de_corte-1,rep(0,length(row_osm)))
     # Si hay alguna de OSM que vaya con este caso
     if(length(row_osm)>0){
       # Me armo objetos tipo punto para cada uno
@@ -101,9 +104,10 @@ compara_GGMAP_OSM = function(inputArchivo = 'bases/Base_p_ariel_y_yamila.csv',pe
   if(all(!is.null(data_check$CERCA_CLINICA))){
     data_check$LATLON_DE_CLINICA = FALSE
     for(row_check in 1:nrow(data_check)){
+      row_check  = 3
       if(data_check$COMPARACION_PUNTAJE[row_check]<=puntaje_de_corte){
         if(all(!is.null(data_check$CERCA_CLINICA))){
-          if((!is.na(data_check$CERCA_CLINICA[row_check]) & !data_check$CERCA_CLINICA[row_check]) |
+          if((!is.na(data_check$CERCA_CLINICA[row_check]) & !data_check$CERCA_CLINICA[row_check] & !is.na(data_check$LAT_CLINICA[row_check])) |
               (is.na(data_check$CERCA_CLINICA[row_check]) & !is.na(data_check$LAT_CLINICA[row_check]) & is.na(data_check$LAT_GEOCHE[row_check]))
                 ){
             data_check$LAT_GEOCHE[row_check] = data_check$LAT_CLINICA[row_check]

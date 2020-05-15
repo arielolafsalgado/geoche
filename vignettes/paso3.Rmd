@@ -1,0 +1,27 @@
+---
+title: 'Paso 3: checkeo por provincias'
+author: "Ariel Salgado"
+date: "15/5/2020"
+output: rmarkdown::html_vignette
+---
+
+## *PREAMBULO*
+En este tercer paso, el checkeo es muy similar al anterior. Únicamente que en este caso emplearemos polígonos de las provincias en vez de departamentos
+
+## *PASO 3: CHECKEO POR PROVINCIAS*
+
+Nuevamente, el código es muy sencillo. Únicamente debemos cargar el paquete, el directorio en el cual se encuentra nuestro archivo base, y el directorio en el que se encuentran el archivo shape con las provincias. Además, debemos indicar en qué columna se encuentra el ID asociado a la provincia de cada caso a georreferenciar. Esta columna debe contener EXACTAMENTE los códigos presentes en una columna ```link``` en el archivo shape. La función realiza un matcheo EXACTO entre los argumento en la columna ```depto_id_column``` del archivo input y ```link``` del archivo shape.
+
+```
+require(geoche)
+inputArchivo = 'bases/ejemplo/ejemplo.csv'
+provincias_path = 'shp/provincias/provincias.shp'
+prov_id_column='ID_PROVINCIA_INDEC_RESIDENCIA'
+output = checkea_provincia_ggmap_y_osm(inputArchivo,provincias_path,prov_id_column)
+```
+
+En esta función existen varios parámetros que pueden modificarse, siendo los más relevantes:
+
+
+- `crs`: el sistema coordenado usado para buscar intersecciones. Por default 22185
+- `id_column`: Columna con los ids en el archivo OSM y archivo original. Por default, _IDEVENTOCASO_.

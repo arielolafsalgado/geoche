@@ -5,7 +5,7 @@
 \title{Comprueba consistencia entre los departamentos y las posiciones georreferenciadas}
 \usage{
 
-  checkea_departamentos_ggmap_y_osm(inputArchivo = "bases/Base_p_ariel_y_yamila.csv",
+  checkea_departamentos_ggmap_y_osm(inputArchivo = "bases/ejemplo/ejemplo.csv",
   departamentos_path = "shp/departamentos/censo_por_departamento_polígonos.shp",
   depto_id_column = "ID_DEPTO",
   lonlat_columns_ggmap = c("LON_RESIDENCIA", "LAT_RESIDENCIA"),

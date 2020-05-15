@@ -4,9 +4,8 @@
 \alias{checkea_clinica_ggmap_y_osm}
 \title{Comprueba cercanía con el punto de atencion}
 \usage{
-
-  checkea_clinica_ggmap_y_osm(inputArchivo = "bases/Base_p_ariel_y_yamila.csv",
-  hospitales_path = "shp/hospitales/ListadoREFES.shp",
+checkea_clinica_ggmap_y_osm(inputArchivo = "bases/ejemplo/ejemplo.csv",
+  hospitales_path = "shp/hospitales/hospitales.shp",
   hospi_name_column = "ESTAB_CLINICA",
   lonlat_columns_ggmap = c("LON_RESIDENCIA", "LAT_RESIDENCIA"),
   lonlat_columns_osm = c("LON_RESIDENCIA_OSM", "LAT_RESIDENCIA_OSM"),

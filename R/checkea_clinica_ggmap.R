@@ -15,7 +15,7 @@ checkea_clinica_ggmap = function(data_ggmap,hospis_datos_shp,hospitales,max_dist
   data_ggmap$LON_CLINICA = NA
   for(row_ggmap in 1:nrow(data_ggmap)){
     hospi = data_ggmap[row_ggmap,hospi_name_column]
-    if(!is.na(hospis_datos_shp[hospi])){
+    if(!is.na(hospis_datos_shp[hospi]) & hospi!='' & !is.na(hospi)){
       if(all(!is.na(data_ggmap[row_ggmap,lonlat_columns]))){
         punto = st_as_sf(data_ggmap[row_ggmap,],crs=4326,coords=lonlat_columns)
         punto_hospi = hospitales[hospis_datos_shp[hospi],]

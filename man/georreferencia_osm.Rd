@@ -4,12 +4,11 @@
 \alias{georreferencia_osm}
 \title{Georreferencia usando tmaptools}
 \usage{
-georreferencia_osm(inputArchivo = sub(".csv", "_recortados.csv",
-  "bases/francoA/ListadoA.csv"), id_column = "IDEVENTOCASO",
-  campos_a_domicilio = c("Localidad", "Calle", "Número"),
-  campos_a_domicilio2 = c("Partido", "Localidad", "Calle", "Número"),
-  prefijo_domicilio = "ARGENTINA", sep = ",", write.it = T,
-  verbose = T, timeout = 5)
+georreferencia_osm(inputArchivo = "bases/ejemplo/ejemplo.csv",
+  id_column = "IDEVENTOCASO", campos_a_domicilio = c("Localidad",
+  "Calle", "Número"), campos_a_domicilio2 = c("Partido", "Localidad",
+  "Calle", "Número"), prefijo_domicilio = "ARGENTINA", sep = ",",
+  write.it = T, verbose = T, timeout = 5)
 }
 \arguments{
 \item{inputArchivo}{El path al archivo de datos}

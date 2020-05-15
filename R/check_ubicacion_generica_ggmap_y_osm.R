@@ -11,7 +11,7 @@
 #' @description Esta función calcula la georreferenciación de los datos mediante osm y devuelve el data frame, con columnas LAT_RESIDENCIA_OSM y LON_RESIDENCIA_OSM.
 #' @return Devuelve una lista con ambos datasets
 #' @export
-check_ubicacion_generica_ggmap_y_osm = function(inputArchivo = sub('.csv','_recortados.csv','bases/francoA/ListadoA.csv'),ubicaciones_genericas_ggmap_path = 'ubicaciones_genericas/ubicaciones_genericas_ggmap.csv',ubicaciones_genericas_osm_path = 'ubicaciones_genericas/ubicaciones_genericas_osm.csv',campos_genericos1=c("Localidad","Calle","Número"),campos_genericos2=c("Partido","Localidad","Calle","Número"),prefijo='ARGENTINA',id_column='IDEVENTOCASO',apikey  = readLines('apikey.txt'),write.it=T,verbose=T,timeout=5,texto_a_eliminar=c('*SIN DATO* (*SIN DATO*)','NULL'),lonlat_columns_ggmap=c('LON_RESIDENCIA','LAT_RESIDENCIA'),lonlat_columns_osm=c('LON_RESIDENCIA_OSM','LAT_RESIDENCIA_OSM')){
+check_ubicacion_generica_ggmap_y_osm = function(inputArchivo = 'bases/ejemplo/ejemplo.csv',ubicaciones_genericas_ggmap_path = 'ubicaciones_genericas/ubicaciones_genericas_ggmap.csv',ubicaciones_genericas_osm_path = 'ubicaciones_genericas/ubicaciones_genericas_osm.csv',campos_genericos1=c("Localidad","Calle","Número"),campos_genericos2=c("Partido","Localidad","Calle","Número"),prefijo='ARGENTINA',id_column='IDEVENTOCASO',apikey  = readLines('apikey.txt'),write.it=T,verbose=T,timeout=5,texto_a_eliminar=c('*SIN DATO* (*SIN DATO*)','NULL'),lonlat_columns_ggmap=c('LON_RESIDENCIA','LAT_RESIDENCIA'),lonlat_columns_osm=c('LON_RESIDENCIA_OSM','LAT_RESIDENCIA_OSM')){
   inputGGMAP = sub('.csv','_georrefGGMAP.csv',inputArchivo)
   inputOSM = sub('.csv','_georrefOSM.csv',inputArchivo)
   data_ggmap = read.csv(inputGGMAP,stringsAsFactors=F)
@@ -24,9 +24,16 @@ check_ubicacion_generica_ggmap_y_osm = function(inputArchivo = sub('.csv','_reco
   ubicaciones_genericas_ggmap = actualiza_ubicaciones_genericas_ggmap(loc_genericas,ubicaciones_genericas_ggmap_path,apikey)
   ubicaciones_genericas_osm = actualiza_ubicaciones_genericas_osm(loc_genericas,ubicaciones_genericas_osm_path,timeout = timeout)
 
-  data_ggmap = check_ubicacion_generica_ggmap(data_ggmap,ubicaciones_genericas_ggmap,campos_genericos1,campos_genericos2,lonlat_columns_ggmap,texto_a_eliminar,verbose)
-  data_osm = check_ubicacion_generica_osm(data_osm,data_ggmap,ubicaciones_genericas_osm,campos_genericos1,campos_genericos2,lonlat_columns_osm,texto_a_eliminar,verbose)
-  ## Ahora busco coincidencias
+  if(file.exists(ubicaciones_genericas_ggmap_path)){
+    data_ggmap = check_ubicacion_generica_ggmap(data_ggmap,ubicaciones_genericas_ggmap,campos_genericos1,campos_genericos2,lonlat_columns_ggmap,texto_a_eliminar,verbose)
+  }else{
+    print('No existe archivo de ubicaciones genericas para GOOGLE')
+  }
+  if(file.exists(ubicaciones_genericas_osm_path)){
+    data_osm = check_ubicacion_generica_osm(data_osm,data_ggmap,ubicaciones_genericas_osm,campos_genericos1,campos_genericos2,lonlat_columns_osm,texto_a_eliminar,verbose)
+  }else{
+    print('No existe archivo de ubicaciones genericas para OSM')
+  }
 
   # GUARDO LOS DATOS
   if(write.it){
@@ -38,8 +45,11 @@ check_ubicacion_generica_ggmap_y_osm = function(inputArchivo = sub('.csv','_reco
     print('RESUMEN UBICACIONES GENERICAS:')
     print('GGMAP DIO UBICACIONES GENERICAS?')
     print(table(data_ggmap$MATCH_GENERICO,useNA='ifany'))
+    if(!file.exists(ubicaciones_genericas_ggmap_path)) print('No existe archivo de ubicaciones genericas para GOOGLE')
     print('OSM DIO UBICACIONES GENERICAS?')
     print(table(data_osm$MATCH_GENERICO,useNA='ifany'))
+    if(!file.exists(ubicaciones_genericas_osm_path)) print('No existe archivo de ubicaciones genericas para OSM')
+
   }
   return(list('ggmap'=data_ggmap,'osm'=data_osm))
 

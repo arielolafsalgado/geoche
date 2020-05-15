@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Ariel Salgado" />
+
+
+<title>Geolocalizando con geoche</title>
+
+
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Geolocalizando con geoche</h1>
+<h4 class="author">Ariel Salgado</h4>
+<h4 class="date">15/5/2020</h4>
+
+
+
+<div id="preambulo" class="section level2">
+<h2><em>PREAMBULO</em></h2>
+<p><strong>geoche</strong> es un paquete diseñado para realizar geolocalización en el marco de la pandemia COVID-19. Fue diseñado con la idea de fondo de que en el proceso de geolocalización se cuenta con información extra de checkeo que puede ser usada para evaluar rápidamente la calidad de una georreferenciación, y por lo tanto, gran parte de los casos de búsqueda, que usualmente son realizados a mano, pueden ahorrarse de los que usualmente son buscados a mano. Esta información incluye regiones a las que con seguridad debería pertenecer el punto obtenido, que deben ser acompañadas con capas de poligonos que los representen sobre el mapa. En particular, en el problema original se contaba con un método de chequeo basado en la distancia a ciertos puntos de referencia, correspondientes a clinicas de atencion.</p>
+<div id="algunas-consideraciones-sobre-la-informacion-de-entrada" class="section level3">
+<h3><em>ALGUNAS CONSIDERACIONES SOBRE LA INFORMACIÓN DE ENTRADA</em></h3>
+<p>En la versión actual, su uso está orientado a georreferenciar casos en los que se cuenta con información de su domicilio, el cual se espera que pueda dividirse en campos DOMICILIO (refiriendose por este a la calle y al número, que pueden estar subdivididos en otros campos como CALLE y NÚMERO), LOCALIDAD, DEPARTAMENTO, PROVINCIA, PAIS (o un subconjunto de estas). Contar con menos columnas genera obviamente deterioro en la calidad de las geolocalizaciones, pero contar con exceso de información también puede generar deterioro. Por ejemplo, considere el caso:</p>
+<pre><code> ARGENTINA, Ciudad Autonoma de Buenos Aires, CALLLE ABCDE NUMERO 123</code></pre>
+<p>La palabra CALLE y NUMERO son espureas y sobran, deteriorando la calidad de la búsqueda. Algo así es preferible:</p>
+<pre><code>ARGENTINA, Ciudad Autonoma de Buenos Aires, ABCDE 123</code></pre>
+<p>Ser inespecifico a niveles menores, genera ubicaciones representativas del poligono más grande que incluya la búsqueda:</p>
+<pre><code>ARGENTINA, Ciudad Autonoma de Buenos Aires</code></pre>
+<p>dará por resultado una ubicación representativa de la Ciudad Autónoma de Buenos Aires. En cambio, algo como</p>
+<pre><code>ARGENTINA, ABCDE 123</code></pre>
+<p>inevitablemente llevará a un resultado erroneo, debido a la multiplicidad de valores asociados a una calle que puede estar repetida muchas veces por toda la ciudad.</p>
+<p>La calidad de la búsqueda mejora si no hay caracteres extraños en los nombres. Es preferible que no tengan ningun tipo de tilde evitar caracteres como N°, ^ # y otros. El programa cuenta con un depurador de texto, pero es preferible realizar ese proceso a conciencia Mientras más completos estén los campos, mayor confianza se le puede tener al resultado.</p>
+<p>Los inputs de la geolocalización son archivos .csv, separados por commas.</p>
+</div>
+<div id="algunos-comentarios-sobre-el-output" class="section level3">
+<h3><em>ALGUNOS COMENTARIOS SOBRE EL OUTPUT</em></h3>
+<p>El resultado de la geolocalización es un archivo .csv, idéntico al archivo input, pero con el agregado de algunas columnas. Estas columnas contienen información útil para contrastar la calidad del resultado, con el objetivo de proveer una manera rápida checkeo del resultado. También se incluyen funciones para hacer mapas, para poder vizualizar los puntos de forma rápida y decidir si algo funcionó por fuera de los esperado.</p>
+<p><em>En resumen</em>, si bien este paquete facilita la automatización del proceso de georreferenciación, no elimina la necesidad de un checkeo previo y posterior de la información que se emplea y se obtiene.</p>
+</div>
+</div>
+<div id="pasos-para-la-georreferenciacion." class="section level2">
+<h2>PASOS PARA LA GEORREFERENCIACION.</h2>
+<p>El código del paquete se acompaña con varios scripts modelo, para dar una base de como usar el paquete. El proceso de georreferenciación propuesto consta de 6 pasos.</p>
+<ul>
+<li><p>El primer paso corresponde con georreferenciar los domicilios usando el API de GOOGLEMAPS (a través del paquete <em>ggmap</em> y el API de OPEN STREET MAPS (a través del paquete <em>tmaptools</em>). La función de geocoding de <em>ggmap</em> retorna un_ único punto para cada <em>query</em> (búsqueda), mientras que la de <em>tmaptools</em> permite obtener varios resultados para una misma <em>query</em>. Los resultados de estas georreferenciaciones son guardados en dos archivos csv, que se van actualizando en los siguientes pasos.</p></li>
+<li><p>Los siguientes pasos constan de chequeos posibles de ser realizados:</p>
+<ul>
+<li><p>Paso 2: Si se cuenta con información de los departamentos, se puede chequear que la ubicación encontrada esté en el departamento.</p></li>
+<li><p>Paso 3: Si se cuenta con información de la provincia, se puede chequear que la ubicación encontrada esté en la provincia.</p></li>
+<li><p>Paso 4: Si se cuenta con información de el hospital en el que se atendió la persona, se puede chequear que la dirección esté dentro de cierta distancia máxima al hospital. A futuro, esta opción representará distancia a una ubicación genérica que sea de interés para el usuario. En ambos casos, el poligono con los hospitales (en formato shp) debería ser provisto por el usuario.</p></li>
+<li><p>Paso 5: Se checkea que la ubicación obtenida no corresponda con una ubicación genérica equivalente a no poner la dirección exacta (con calle y número) sino solo una formada por un subconjunto de los datos (por ejemplo, solo pais y provincia). Este checkeo surge del hecho de que a veces los geocoders, al no encontrar el resultado, retornan algun resultado de búsqueda por default.</p></li>
+</ul></li>
+<li><p>Paso 6: Se compara entre las ubicaciones obtenidas, y se queda con la ubicación que más criterios haya pasado. Además, se incorpora un criterio extra que se basa en la coherencia interna de las georreferenciaciones: todos los resultados deberían estar dentro de un radio. Resultados que se encuentren muy alejados, son penalizados. Ubicaciones con puntaje perfecto son tomadas como <em>buenas</em>. Ubicaciones con varias fallas pueden ser <em>medias</em> o <em>malas</em>, en base a un criterio establecido por el usuario en base al nivel de penalización para cada falla.</p></li>
+</ul>
+<p>Por ejemplo, si consideramos la búsqueda <code>Argentina, Ciudad autónoma de Buenos Aires, Alcorta 123</code>, esta puede referirse a la calle <code>Figueroa Alcorta número 123</code>, al igual que a la calle <code>Amancio Alcorta 123</code>, mientras que la búsqueda <code>Argentina, Ciudad autónoma de Buenos Aires, Comuna 4, Alcorta 123</code> podría no tener ningún resultado exitoso. Aún así, con la información de los polígonos de las comunas de la C.A.B.A. podemos distinguir si el resultado se encuentra en la <code>Comuna 4</code> o nó, y penalizarlo en base a eso. Si tenemos buena confianza en la información de la comuna asignada a cada domicilio, podemos penalizar duramente que la ubicación no se encuentre en el departamento, y calificar como <em>mala</em> a toda ubicación (sea de <em>ggmap</em> o de <em>tmaptools</em>) que hayamos obtenido y no coincida lo obtenido con el departamento. La razón para no tomar descartar de plano esta ubicación es que podría haber error en la información incluida sobre del departamento (supongamos que en vez de decir <code>Comuna 4</code> decía <code>Comuna 3</code>) y entonces no queramos descartar completamente a un resultado que falle a este nivel, pero por ejemplo a uno que no coincida con la provincia asignada.</p>
+</div>
+<div id="proveedores-de-geocoding" class="section level2">
+<h2><em>PROVEEDORES DE GEOCODING</em></h2>
+<p>Si bien OPEN STREET MAP provee gratuitamente del servicio de búsquedas, no es el mismo caso con GOOGLE MAPS. Las búsquedas realizadas con GOOGLE requieren de una clave API que ud. deberá proveerse para sí. Documentación sobre como activar su cuenta de google para realizar búsquedas puede encontrarse en <a href="https://cloud.google.com/" class="uri">https://cloud.google.com/</a>.</p>
+<div id="a-continuacion" class="section level3">
+<h3><em>A continuacion</em></h3>
+<p>En esta serie de vignettes realizaremos un ejemplo de georreferenciación de 3 domicilios, todos en C.A.B.A. con el objetivo de tener una primer familiarización con scripts y funciones. Tenga en cuenta que esta es la primer versión del tutorial, y este puede no presentar todas las dificultades o situaciones con las que un usuario se encontrará durante el delicado proceso de georreferenciacion.</p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

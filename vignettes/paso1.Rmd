@@ -1,0 +1,77 @@
+---
+title: 'Paso 1: georreferenciacion'
+author: "Ariel Salgado"
+date: "15/5/2020"
+output: rmarkdown::html_vignette
+---
+## *PREAMBULO*
+En este archivo presentaré como realizar el primero de los pasos: georreferenciar un grupo de casos. Para esto ud. deberá contar con el archivo `ejemplo.csv`. Si este no fue provisto con el paquete, pongase en contacto con el autor. Usted deberá escribir este archivos en un directorio de su elección, y trabajar con direcciones basadas en ese archivo. Recuerde que toda la lógica de este paquete al día actual se basa en trabajar con las direcciones de los archivos. Versiones futuras podrán incluir trabajar directamente con los `data.frame`.
+
+
+## *Modelo de trabajo para el primer caso*
+Con el paquete y el archivo `ejemplo.csv` ud. debería haber sido provisto con una serie de scripts modelo. En este _vignette_ trabajaremos con el script denominado `paso1.R`. La información que verá aquí estará basada en ese mismo script, y orientada a trabajar con el archivo `ejemplo.csv`.
+
+
+## *La clave API*
+
+Si bien OPEN STREET MAP (OSM) provee de búsquedas de forma libre, no es el caso con GOOGLE. Ud. deberá contar con una clave API provista por GOOGLE en https://cloud.google.com/. La misma deberá ser cargada en un archivo `apikey.txt`, preferiblemente en el mismo directorio que los scripts de ejemplo. En los ejemplos siguientes, se asumirá que se cuenta con dicha clave y que esta se encuentra ubicada al mismo nivel que los scripts.
+
+## *Las bases de datos*
+
+Se recomienda contar con una carpeta `bases` al mismo nivel que los scripts, y colocar el archivo `ejemplo.csv` en `bases/ejemplo/ejemplo.csv`. El proceso de georreferenciación crea varios archivos intermedios, y colocar todos estos en una carpeta separada facilitará la organización del trabajo. En lo siguiente, supondremos que los scripts y la carpeta base se encuentran en un directorio `trabajo`, que engloba todos los archivos que serán usados durante este tutorial.
+
+## *PASO 1: GEORREFERENCIACION*
+
+Suponemos entonces contar con el script `trabajo/paso1.R`, la base *ejemplo* en `trabajo/bases/ejemplo/ejemplo.csv` y la clave API en `trabajo/apikey.txt`.
+
+Comenzamos cargando el paquete y la clave API
+
+```
+require(geoche)
+apikey  = readLines('apikey.txt')
+```
+
+Cargamos la dirección del archivo en la variable `inputArchivo`
+```
+inputArchivo = 'bases/ejemplo/ejemplo.csv'
+```
+
+La función que georreferencia necesita saber las variables a partir de las cuales construirá el domicilio. Actualmente, usa un conjunto de variables para georreferenciar con GOOGLE y hasta 2 para OSM (siendo uno el mismo que con GOOGLE).
+
+Estos campos se especifican en las variables `campos_a_domicilio`
+
+
+```
+campos_a_domicilio = c("PROVINCIA_RESIDENCIA",
+                       "LOCALIDAD_RESIDENCIA",
+                       "CALLE_DOMICILIO",
+                       "NUMERO_DOMICILIO")
+
+campos_a_domicilio2 = c("PROVINCIA_RESIDENCIA",
+                       "DEPARTAMENTO_RESIDENCIA",
+                       "LOCALIDAD_RESIDENCIA",
+                       "CALLE_DOMICILIO",
+                       "NUMERO_DOMICILIO")
+```
+
+Ya que es bastante común que para todos los casos conozcamos cierta parte de la ubicación (como el país), se puede agregar un string a todos campos a ser buscados. *geoche* construye las busquedas pegando un campo a continuación de otro. Este string extra se agrega al principio. Por ejemplo, en este caso agregamos _ARGENTINA_ al comienzo de todos los textos de búsqueda. Para poder seguir el rastro de que caso se relaciona con cuál en GOOGLE y OSM, también es necesario contar con una columna de IDs únicos para cada caso a georreferencia (aquí indicada en `id_column`. Por último, la variable `timeout` sirve para poner un límite de tiempo a las _queries_ a OSM, que pueden llegar a demorarse mucho por problemas del servidor.
+
+```
+prefijo_domicilio = 'ARGENTINA'
+id_column = 'IDEVENTOCASO'
+timeout = 5
+```
+Esta información se la pasamos a una función que se ocupa de georreferenciar y generar dos archivos en el mismo directorio que `inputArchivo` (uno para GOOGLE y otro para OSM). 
+
+```
+output = georreferencia_ggmap_y_osm(inputArchivo,campos_a_domicilio,campos_a_domicilio2,prefijo_domicilio,id_column,apikey,timeout,sep=',')
+```
+
+Algunas variables extra que pueden especificarse:
+
+- `sep` permite indicar el separador en el archivo `inputArchivo`.
+- `apikey` es la clave api (como texto) a ser usada.
+- `write.it` permite especificar si queremos que el resultado se escriba.
+- `verbose` permite indicar si queremos que se muestre información sobre el proceso de georreferenciado.
+
+Para más detalles, use `?georreferencia_ggmap_y_osm`

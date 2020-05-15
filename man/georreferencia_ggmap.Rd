@@ -4,11 +4,10 @@
 \alias{georreferencia_ggmap}
 \title{Georreferencia usando ggmap}
 \usage{
-georreferencia_ggmap(inputArchivo = sub(".csv", "_recortados.csv",
-  "bases/francoA/ListadoA.csv"), campos_a_domicilio = c("Localidad",
-  "Calle", "Número"), prefijo_domicilio = "ARGENTINA",
-  apikey = readLines("apikey.txt"), sep = ",", write.it = T,
-  verbose = T)
+georreferencia_ggmap(inputArchivo = "bases/ejemplo/ejemplo.csv",
+  campos_a_domicilio = c("Localidad", "Calle", "Número"),
+  prefijo_domicilio = "ARGENTINA", apikey = readLines("apikey.txt"),
+  sep = ",", write.it = T, verbose = T)
 }
 \arguments{
 \item{inputArchivo}{El path al archivo de datos}

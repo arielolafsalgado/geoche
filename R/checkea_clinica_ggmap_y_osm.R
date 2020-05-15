@@ -10,7 +10,7 @@
 #' @param verbose Booleano ¿debe imprimir el progreso? Default TRUE
 #' @return Una lista con ambos data frames.
 #' @export
-checkea_clinica_ggmap_y_osm = function(inputArchivo = 'bases/Base_p_ariel_y_yamila.csv',hospitales_path='shp/hospitales/ListadoREFES.shp',hospi_name_column='ESTAB_CLINICA',lonlat_columns_ggmap=c('LON_RESIDENCIA','LAT_RESIDENCIA'),lonlat_columns_osm=c('LON_RESIDENCIA_OSM','LAT_RESIDENCIA_OSM'),max_distancia = 200*1000,id_column='IDEVENTOCASO',write.it=T,verbose=T){
+checkea_clinica_ggmap_y_osm = function(inputArchivo = "bases/ejemplo/ejemplo.csv",hospitales_path='shp/hospitales/hospitales.shp',hospi_name_column='ESTAB_CLINICA',lonlat_columns_ggmap=c('LON_RESIDENCIA','LAT_RESIDENCIA'),lonlat_columns_osm=c('LON_RESIDENCIA_OSM','LAT_RESIDENCIA_OSM'),max_distancia = 200*1000,id_column='IDEVENTOCASO',write.it=T,verbose=T){
   require(sf)
   inputGGMAP = sub('.csv','_georrefGGMAP.csv',inputArchivo)
   inputOSM = sub('.csv','_georrefOSM.csv',inputArchivo)

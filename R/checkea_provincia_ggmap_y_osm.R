@@ -11,7 +11,7 @@
 #' @param write.it Se deben escribir los archivos? Por default TRUE
 #' @return Una lista con ambos data frames.
 #' @export
-checkea_provincia_ggmap_y_osm = function(inputArchivo = 'bases/Base_p_ariel_y_yamila.csv',provincias_path='shp/provincias/provincias.shp',prov_id_column='ID_PROVINCIA',lonlat_columns_ggmap=c('LON_RESIDENCIA','LAT_RESIDENCIA'),lonlat_columns_osm=c('LON_RESIDENCIA_OSM','LAT_RESIDENCIA_OSM'),crs=22185,id_column='IDEVENTOCASO',verbose=T,write.it=T){
+checkea_provincia_ggmap_y_osm = function(inputArchivo = 'bases/ejemplo/ejemplo.csv',provincias_path='shp/provincias/provincias.shp',prov_id_column='ID_PROVINCIA',lonlat_columns_ggmap=c('LON_RESIDENCIA','LAT_RESIDENCIA'),lonlat_columns_osm=c('LON_RESIDENCIA_OSM','LAT_RESIDENCIA_OSM'),crs=22185,id_column='IDEVENTOCASO',verbose=T,write.it=T){
   require(sf)
   inputGGMAP = sub('.csv','_georrefGGMAP.csv',inputArchivo)
   inputOSM = sub('.csv','_georrefOSM.csv',inputArchivo)

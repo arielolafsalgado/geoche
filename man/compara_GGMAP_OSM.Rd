@@ -4,18 +4,20 @@
 \alias{compara_GGMAP_OSM}
 \title{Compara los resultados obtenidos con GGMAP y OSM y elige el mejor resultado}
 \usage{
-compara_GGMAP_OSM(inputArchivo = "bases/Base_p_ariel_y_yamila.csv",
-  peso_hospital = 10, peso_generico = 1, peso_provincia = 1,
-  peso_departamento = 1, peso_distancia = 1, puntaje_de_corte = -5,
-  lonlat_columns_ggmap = c("LON_RESIDENCIA", "LAT_RESIDENCIA"),
-  lonlat_columns_osm = c("LON_RESIDENCIA_OSM", "LAT_RESIDENCIA_OSM"),
-  max_dist = 1000, id_column = "IDEVENTOCASO", na.value = FALSE,
-  write.it = T, verbose = T, mapa_check = F,
+compara_GGMAP_OSM(inputArchivo = "bases/ejemplo/ejemplo.csv",
+  ventaja_ggmap = 1, peso_hospital = 10, peso_generico = 1,
+  peso_provincia = 1, peso_departamento = 1, peso_distancia = 1,
+  puntaje_de_corte = -5, lonlat_columns_ggmap = c("LON_RESIDENCIA",
+  "LAT_RESIDENCIA"), lonlat_columns_osm = c("LON_RESIDENCIA_OSM",
+  "LAT_RESIDENCIA_OSM"), max_dist = 1000, id_column = "IDEVENTOCASO",
+  na.value = FALSE, write.it = T, verbose = T, mapa_check = F,
   columna_depto = "DEPARTAMENTO_RESIDENCIA",
   columna_prov = "PROVINCIA_RESIDENCIA")
 }
 \arguments{
 \item{inputArchivo}{Path a partir del cual construir los paths para ggmap y osm. El archivo que fue usado para construirlos.}
+
+\item{ventaja_ggmap}{La ventaja inicial que lleva en puntos GOOGLE (puede ser cualquier numero, positivo o negativo). Por default, 1.}
 
 \item{peso_hospital}{El peso asociado al checkeo.}
 
