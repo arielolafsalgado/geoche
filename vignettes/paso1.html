@@ -262,7 +262,7 @@ campos_a_domicilio2 = c(&quot;PROVINCIA_RESIDENCIA&quot;,
 id_column = 'IDEVENTOCASO'
 timeout = 5</code></pre>
 <p>Esta información se la pasamos a una función que se ocupa de georreferenciar y generar dos archivos en el mismo directorio que <code>inputArchivo</code> (uno para GOOGLE y otro para OSM).</p>
-<pre><code>georreferencia_ggmap_y_osm(inputArchivo,campos_a_domicilio,campos_a_domicilio2,prefijo_domicilio,id_column,apikey,timeout,sep=',')</code></pre>
+<pre><code>output = georreferencia_ggmap_y_osm(inputArchivo,campos_a_domicilio,campos_a_domicilio2,prefijo_domicilio,id_column,apikey,timeout,sep=',')</code></pre>
 <p>Algunas variables extra que pueden especificarse:</p>
 <ul>
 <li><code>sep</code> permite indicar el separador en el archivo <code>inputArchivo</code>.</li>

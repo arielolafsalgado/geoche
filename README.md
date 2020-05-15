@@ -16,3 +16,8 @@ The result consists in a series of new columns in the dataset, indicating the re
 
 Clone el repositorio en su disco, y desde dentro de la carpeta _geoche_
 corra desde **R** `devtools::install()`
+
+
+# Guia
+
+En la carpeta vignettes encontrará un mini tutorial de uso, y en la carpeta geoche_extras/ encontrará una carpeta trabajo con scripts de ejemplo.

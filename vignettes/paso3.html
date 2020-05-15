@@ -14,7 +14,7 @@
 <meta name="author" content="Ariel Salgado" />
 
 
-<title>Paso 2: checkeo por departamentos</title>
+<title>Paso 3: checkeo por provincias</title>
 
 
 
@@ -215,7 +215,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 
 
-<h1 class="title toc-ignore">Paso 2: checkeo por departamentos</h1>
+<h1 class="title toc-ignore">Paso 3: checkeo por provincias</h1>
 <h4 class="author">Ariel Salgado</h4>
 <h4 class="date">15/5/2020</h4>
 
@@ -223,16 +223,16 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <div id="preambulo" class="section level2">
 <h2><em>PREAMBULO</em></h2>
-<p>En este segundo paso, realizaremos un checkeo sobre la georreferenciación realizada en el paso anterior. La idea es aprovecharse de esta información para contrastar si el resultado es razonable. Los archivos con información sobre departamentos se espera que esten en formato shape (.shp), de forma de que sean leidos mediante el paquete <em>sf</em>. Con este tutorial se proveen archivos provistos por el INDEC que contienen los archivos shape de los departamentos y provincias.</p>
+<p>En este tercer paso, el checkeo es muy similar al anterior. Únicamente que en este caso emplearemos polígonos de las provincias en vez de departamentos</p>
 </div>
-<div id="paso-2-checkeo-por-departamentos" class="section level2">
-<h2><em>PASO 2: CHECKEO POR DEPARTAMENTOS</em></h2>
-<p>En este caso, el código es muy sencillo. Únicamente debemos cargar el paquete, el directorio en el cual se encuentra nuestro archivo base, y el directorio en el que se encuentran el archivo shape con los departamentos. Además, debemos indicar en qué columna se encuentra el ID asociado al departamento de cada caso a georreferenciar. Esta columna debe contener EXACTAMENTE los códigos presentes en una columna <code>link</code> en el archivo shape. La función realiza un matcheo EXACTO entre los argumento en la columna <code>depto_id_column</code> del archivo input y <code>link</code> del archivo shape.</p>
+<div id="paso-3-checkeo-por-provincias" class="section level2">
+<h2><em>PASO 3: CHECKEO POR PROVINCIAS</em></h2>
+<p>Nuevamente, el código es muy sencillo. Únicamente debemos cargar el paquete, el directorio en el cual se encuentra nuestro archivo base, y el directorio en el que se encuentran el archivo shape con las provincias. Además, debemos indicar en qué columna se encuentra el ID asociado a la provincia de cada caso a georreferenciar. Esta columna debe contener EXACTAMENTE los códigos presentes en una columna <code>link</code> en el archivo shape. La función realiza un matcheo EXACTO entre los argumento en la columna <code>depto_id_column</code> del archivo input y <code>link</code> del archivo shape.</p>
 <pre><code>require(geoche)
 inputArchivo = 'bases/ejemplo/ejemplo.csv'
-departamentos_path = 'shp/departamentos/censo_por_departamento_polígonos.shp'
-depto_id_column='ID_DEPTO_INDEC_RESIDENCIA'
-output = checkea_departamentos_ggmap_y_osm(inputArchivo,departamentos_path,depto_id_column)</code></pre>
+provincias_path = 'shp/provincias/provincias.shp'
+prov_id_column='ID_PROVINCIA_INDEC_RESIDENCIA'
+output = checkea_provincia_ggmap_y_osm(inputArchivo,provincias_path,prov_id_column)</code></pre>
 <p>En esta función existen varios parámetros que pueden modificarse, siendo los más relevantes:</p>
 <ul>
 <li><code>crs</code>: el sistema coordenado usado para buscar intersecciones. Por default 22185</li>
