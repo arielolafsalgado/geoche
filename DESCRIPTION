@@ -5,7 +5,7 @@ Version: 0.1.0
 Author: Ariel Salgado
 Maintainer: Ariel Salgado <asalgado@df.uba.ar>
 Description: Este paquete fue diseñado para validar georreferenciaciones realizadas mediante ggmap y tmaptools, teniendo en cuenta la geografía de la región de búsqueda a través de poligonos geoespaciales.
-Depends: ggmap, tmaptools, sf, stringr
+Depends: ggmap, tmaptools, sf, stringr, R.utils
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 License:  GNU Affero General Public License

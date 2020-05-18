@@ -14,7 +14,7 @@ The result consists in a series of new columns in the dataset, indicating the re
 
 # Instalacion
 
-**geoche** requiere para funciona tener instalados los paquetes **ggmap**, **tmaptools**, **sf**, **stringr**.
+**geoche** requiere para funciona tener instalados los paquetes **ggmap**, **tmaptools**, **sf**, **stringr**, **R.utils**.
 
 ```
 install.packages(c('sf','ggmap','tmaptools','stringr'))
