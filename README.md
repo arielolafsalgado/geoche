@@ -14,10 +14,10 @@ The result consists in a series of new columns in the dataset, indicating the re
 
 # Instalacion
 
-**geoche** requiere para funciona tener instalados los paquetes **ggmap**, **tmaptools**, **sf**, **stringr**, **R.utils**.
+**geoche** requiere para funciona tener instalados los paquetes **ggmap**, **tmaptools**, **sf**, **stringr**, **R.utils**, **leaflet**.
 
 ```
-install.packages(c('sf','ggmap','tmaptools','stringr'))
+install.packages(c('sf','ggmap','tmaptools','stringr','R.utils','leaflet'))
 ```
 
 Ademaś, para georreferencia usando el API de google se necesita una clave API, obtenible a través de una cuenta en google cloud https://cloud.google.com/
