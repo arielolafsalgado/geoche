@@ -27,7 +27,7 @@ genera_loc_domicilios = function(datos,campos,texto_a_eliminar=c('*SIN DATO* (*S
   # Remuevo multiples comas
   loc_domicilio = gsub('(, )\\1+', '\\1', loc_domicilio)
   if(invertir){
-    partido = str_split(', ',loc_domicilio)
+    partido = str_split(loc_domicilio,', ')
     partido = sapply(partido,function(q){
       paste(rev(q),collapse=', ')
     })
