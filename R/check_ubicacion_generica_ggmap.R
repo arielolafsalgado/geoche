@@ -7,9 +7,10 @@
 #' @param lolat_columns Las columnas en las que se encuentras las ubicaciones lon y lat
 #' @param texto_a_eliminar El texto a ser eliminado en la construcción de las ubicaciones genericas. Por default c('*SIN DATO* (*SIN DATO*)','NULL')
 #' @param verbose Boleano ¿Debe imprimirse el progreso? Por default TRUE
+#' @param invertir Dado que la lógica de construccion de busqueda es Prefijo-Campo1-Campo2-...-CampoN, con esta opción se puede invertir la construccion a CampoN-...-Campo1-Prefijo. Por default, FALSE
 #' @return El mismo data frame, pero con una columna nueva que indica si pasó el check
 #' @export
-check_ubicacion_generica_ggmap = function(data_ggmap,ubicaciones_genericas_ggmap,campos_genericos1,campos_genericos2,lonlat_columns=c('LON_RESIDENCIA','LAT_RESIDENCIA'),texto_a_eliminar=c('*SIN DATO* (*SIN DATO*)','NULL'),verbose=T){
+check_ubicacion_generica_ggmap = function(data_ggmap,ubicaciones_genericas_ggmap,campos_genericos1,campos_genericos2,lonlat_columns=c('LON_RESIDENCIA','LAT_RESIDENCIA'),texto_a_eliminar=c('*SIN DATO* (*SIN DATO*)','NULL'),verbose=T,invertir=F){
   data_ggmap$MATCH_GENERICO = NA
   for(row_ggmap in 1:nrow(data_ggmap)){
     if(verbose) print(paste('Checkeando fila',row_ggmap,'GGMAP'))
@@ -29,6 +30,16 @@ check_ubicacion_generica_ggmap = function(data_ggmap,ubicaciones_genericas_ggmap
       busqueda2 = gsub('(, )\\1+', '\\1', busqueda2)
       busqueda1 = toupper(gsub(', $','',busqueda1))
       busqueda2 = toupper(gsub(', $','',busqueda2))
+      if(invertir){
+        b1 = str_split(busqueda1,', ')
+        b1 = sapply(b1,funciton(q) paste(rev(q),collapse=', '))
+        busqueda1 = b1
+      }
+      if(invertir){
+        b2 = str_split(busqueda2,', ')
+        b2 = sapply(b2,funciton(q) paste(rev(q),collapse=', '))
+        busqueda2 = b2
+      }
       match_ids = agrep(busqueda1,ubicaciones_genericas_ggmap$BUSQUEDA,ignore.case = T)
       match_ids = unique(c(match_ids,agrep(busqueda2,ubicaciones_genericas_ggmap$BUSQUEDA,ignore.case = T)))
       if(length(match_ids)>0){

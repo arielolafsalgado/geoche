@@ -8,9 +8,10 @@
 #' @param sep El separador a ser usado cuando se peguen los campos. Por default ", "
 #' @param campoNumero Campo con el número de la calle
 #' @param apikey  La clave api de google. Por default, busca apikey.txt
+#' @param invertir Dado que la lógica de construccion de busqueda es Prefijo-Campo1-Campo2-...-CampoN, con esta opción se puede invertir la construccion a CampoN-...-Campo1-Prefijo. Por default, FALSE
 #' @return El mismo dataset, pero con columnas LAT_GENERICA y LON_GENERICA
 #' @export
-encuentra_ubicacion_generica_ggmap = function(data_ggmap,campos_genericos,ubicaciones_genericas_path,prefijo='ARGENTINA',apikey=readLines('apikey.txt')){
+encuentra_ubicacion_generica_ggmap = function(data_ggmap,campos_genericos,ubicaciones_genericas_path,prefijo='ARGENTINA',apikey=readLines('apikey.txt'),invertir=F){
   campos_genericos_ausentes = setdiff(campos_genericos,colnames(data_ggmap))
   if(length(campos_genericos_ausentes)>0){
     print('Hay campos que no están presentes. Continuando con el resto')
@@ -18,7 +19,7 @@ encuentra_ubicacion_generica_ggmap = function(data_ggmap,campos_genericos,ubicac
   }
   if(file.exists(ubicaciones_genericas_path)){
     ubicaciones_genericas_ggmap = read.csv(ubicaciones_genericas_path,stringsAsFactors=F)
-    loc_genericas = genera_loc_domicilios(data_ggmap,campos_genericos,prefijo = prefijo)
+    loc_genericas = genera_loc_domicilios(data_ggmap,campos_genericos,prefijo = prefijo,invertir=invertir)
     loc_genericas = str_trim(loc_genericas)
     loc_genericas = gsub(',$','',loc_genericas)
     ubicaciones_genericas_ggmap$BUSQUEDA=gsub(',$','',str_trim(toupper(ubicaciones_genericas_ggmap$BUSQUEDA)))
