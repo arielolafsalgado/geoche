@@ -62,20 +62,28 @@ compara_GGMAP_OSM = function(inputArchivo = "bases/ejemplo/ejemplo.csv",ventaja_
         lon = data_osm[row_osm_winner,lonlat_columns_osm[1]]
         data_check$LAT_RESIDENCIA[row_ggmap] = lat
         data_check$LON_RESIDENCIA[row_ggmap] = lon
+        if(all(!is.null(data_check$LATLON_DEPARTAMENTO))){
+          LL_D = data_osm[row_osm_winner,'LATLON_DEPARTAMENTO']
+          data_check$LATLON_DEPARTAMENTO[row_ggmap] = LL_D
+        }
+        if(all(!is.null(data_check$LATLON_PROVINCIA))){
+          LL_P = data_osm[row_osm_winner,'LATLON_PROVINCIA']
+          data_check$LATLON_PROVINCIA[row_ggmap] = LL_P
+        }
         if(all(!is.null(data_check$CERCA_CLINICA))) data_check$CERCA_CLINICA[row_ggmap] = consistencia_hospital[winner_row]
         if(all(!is.null(data_check$MATCH_GENERICO))) data_check$MATCH_GENERICO[row_ggmap] = consistencia_nogenerico[winner_row]
         if(all(!is.null(data_check$LAT_LON_EN_PROVINCIA))) data_check$LAT_LON_EN_PROVINCIA[row_ggmap] = consistencia_provincia[winner_row]
         if(all(!is.null(data_check$LAT_LON_EN_DEPARTAMENTO))) data_check$LAT_LON_EN_DEPARTAMENTO[row_ggmap] = consistencia_depto[winner_row]
       }
     }else{
-      comp_score = 1
+      comp_score = ventaja_ggmap
       columnas = c('LAT_LON_EN_PROVINCIA','LAT_LON_EN_DEPARTAMENTO','CERCA_CLINICA','MATCH_GENERICO')
       pesos = c(peso_provincia,peso_departamento,peso_hospital,peso_generico)
       names(pesos) = columnas
       for(cn in columnas){
         flag = is.element(cn,colnames(data_check))
         if(flag){
-          nopass = !data_check[row_ggmap,cn]
+          nopass = ifelse(cn=='MATCH_GENERICO',yes=data_check[row_ggmap,cn],no=!data_check[row_ggmap,cn])
           if(is.na(nopass)) nopass=TRUE
           comp_score = comp_score - pesos[cn]*nopass
         }
@@ -104,7 +112,6 @@ compara_GGMAP_OSM = function(inputArchivo = "bases/ejemplo/ejemplo.csv",ventaja_
   if(all(!is.null(data_check$CERCA_CLINICA))){
     data_check$LATLON_DE_CLINICA = FALSE
     for(row_check in 1:nrow(data_check)){
-      row_check  = 3
       if(data_check$COMPARACION_PUNTAJE[row_check]<=puntaje_de_corte){
         if(all(!is.null(data_check$CERCA_CLINICA))){
           if((!is.na(data_check$CERCA_CLINICA[row_check]) & !data_check$CERCA_CLINICA[row_check] & !is.na(data_check$LAT_CLINICA[row_check])) |
