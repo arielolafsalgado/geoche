@@ -32,12 +32,12 @@ check_ubicacion_generica_ggmap = function(data_ggmap,ubicaciones_genericas_ggmap
       busqueda2 = toupper(gsub(', $','',busqueda2))
       if(invertir){
         b1 = str_split(busqueda1,', ')
-        b1 = sapply(b1,funciton(q) paste(rev(q),collapse=', '))
+        b1 = sapply(b1,function(q){ paste(rev(q),collapse=', ')})
         busqueda1 = b1
       }
       if(invertir){
         b2 = str_split(busqueda2,', ')
-        b2 = sapply(b2,funciton(q) paste(rev(q),collapse=', '))
+        b2 = sapply(b2,function(q){ paste(rev(q),collapse=', ')})
         busqueda2 = b2
       }
       match_ids = agrep(busqueda1,ubicaciones_genericas_ggmap$BUSQUEDA,ignore.case = T)
