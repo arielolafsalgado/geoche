@@ -7,9 +7,10 @@
 #' @param sep El separador de columnas en inputArchivo
 #' @param write.it Debe escribirse el resultado? Por default TRUE
 #' @param verbose Boleano, ¿debe indicarse el resultado? Por default TRUE
+#' @param invertir Dado que la lógica de construccion de busqueda es Prefijo-Campo1-Campo2-...-CampoN, con esta opción se puede invertir la construccion a CampoN-...-Campo1-Prefijo. Por default, FALSE
 #' @return Devuelve el dataset con las columnas agregadas.
 #' @export
-georreferencia_osm = function(inputArchivo = "bases/ejemplo/ejemplo.csv",id_column='IDEVENTOCASO',campos_a_domicilio=c("Localidad","Calle","Número"),campos_a_domicilio2=c("Partido","Localidad","Calle","Número"),prefijo_domicilio='ARGENTINA',sep=',',write.it=T,verbose=T,timeout=5){
+georreferencia_osm = function(inputArchivo = "bases/ejemplo/ejemplo.csv",id_column='IDEVENTOCASO',campos_a_domicilio=c("Localidad","Calle","Número"),campos_a_domicilio2=c("Partido","Localidad","Calle","Número"),prefijo_domicilio='ARGENTINA',sep=',',write.it=T,verbose=T,timeout=5,invertir=F){
   require(stringr)
   datos = read.csv(inputArchivo,stringsAsFactors=F,sep=sep)
   campos_a_domicilio_no_estan = campos_a_domicilio[!is.element(campos_a_domicilio,colnames(datos))]
@@ -18,7 +19,7 @@ georreferencia_osm = function(inputArchivo = "bases/ejemplo/ejemplo.csv",id_colu
   }
   campos_a_domicilio = campos_a_domicilio[is.element(campos_a_domicilio,colnames(datos))]
   if(length(campos_a_domicilio)>0){
-    loc_domicilio = genera_loc_domicilios(datos,campos_a_domicilio,prefijo=prefijo_domicilio)
+    loc_domicilio = genera_loc_domicilios(datos,campos_a_domicilio,prefijo=prefijo_domicilio,invertir=invertir)
     output_dom = geocode_OSM_ariel(loc_domicilio = loc_domicilio,timeout=timeout)
     aun_por = setdiff(1:nrow(datos),output_dom$fila)
     if(length(aun_por)>0){

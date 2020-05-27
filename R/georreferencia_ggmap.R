@@ -7,9 +7,10 @@
 #' @param sep El separador de columnas en inputArchivo
 #' @param write.it Debe escribirse el resultado? Por default TRUE
 #' @param verbose Boleano, ¿debe indicarse el resultado? Por default TRUE
+#' @param invertir Dado que la lógica de construccion de busqueda es Prefijo-Campo1-Campo2-...-CampoN, con esta opción se puede invertir la construccion a CampoN-...-Campo1-Prefijo. Por default, FALSE
 #' @return Devuelve el dataset con las columnas agregadas.
 #' @export
-georreferencia_ggmap = function(inputArchivo = "bases/ejemplo/ejemplo.csv",campos_a_domicilio=c("Localidad","Calle","Número"),prefijo_domicilio='ARGENTINA',apikey  = readLines('apikey.txt'),sep=',',write.it=T,verbose=T){
+georreferencia_ggmap = function(inputArchivo = "bases/ejemplo/ejemplo.csv",campos_a_domicilio=c("Localidad","Calle","Número"),prefijo_domicilio='ARGENTINA',apikey  = readLines('apikey.txt'),sep=',',write.it=T,verbose=T,invertir=F){
   require(stringr)
   require(ggmap)
   register_google(key = apikey)
@@ -20,7 +21,7 @@ georreferencia_ggmap = function(inputArchivo = "bases/ejemplo/ejemplo.csv",campo
   }
   campos_a_domicilio = campos_a_domicilio[is.element(campos_a_domicilio,colnames(datos))]
   if(length(campos_a_domicilio)>0){
-    loc_domicilio = genera_loc_domicilios(datos,campos_a_domicilio,sep = ', ',prefijo = prefijo_domicilio)
+    loc_domicilio = genera_loc_domicilios(datos,campos_a_domicilio,sep = ', ',prefijo = prefijo_domicilio,invertir=invertir)
     latlon_google = geocode(loc_domicilio)
     datos$LAT_RESIDENCIA = latlon_google$lat
     datos$LON_RESIDENCIA = latlon_google$lon
