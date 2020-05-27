@@ -6,9 +6,10 @@
 #' @param prefijo Un campo de texto a ser agregado previo al resto. Por default "ARGENTINA"
 #' @param sep El separador a ser usado cuando se peguen los campos. Por default ", "
 #' @param campoNumero Campo con el número de la calle
+#' @param invertir Dado que la lógica de construccion es Prefijo-Campo1-Campo2-...-CampoN, con esta opción se puede invertir la construccion a CampoN-...-Campo1-Prefijo. Por default, FALSE
 #' @return Un vector de campos para ser georreferenciados.
 #' @export
-genera_loc_domicilios = function(datos,campos,texto_a_eliminar=c('*SIN DATO* (*SIN DATO*)','NULL',paste('COMUNA',1:20)),prefijo='ARGENTINA',sep=', ',campoNumero=NULL){
+genera_loc_domicilios = function(datos,campos,texto_a_eliminar=c('*SIN DATO* (*SIN DATO*)','NULL',paste('COMUNA',1:20)),prefijo='ARGENTINA',sep=', ',campoNumero=NULL,invertir=F){
   loc_domicilio = prefijo
   if(is.null(campoNumero)) campoNumero = campos[length(campos)]
   for(campo in campos){
@@ -25,5 +26,12 @@ genera_loc_domicilios = function(datos,campos,texto_a_eliminar=c('*SIN DATO* (*S
   loc_domicilio = gsub('CABA','CIUDAD DE BUENOS AIRES',loc_domicilio)
   # Remuevo multiples comas
   loc_domicilio = gsub('(, )\\1+', '\\1', loc_domicilio)
+  if(invertir){
+    partido = str_split(', ',loc_domicilio)
+    partido = sapply(partido,function(q){
+      paste(rev(q),collapse=', ')
+    })
+    loc_domicilio = partido
+  }
   return(loc_domicilio)
 }
