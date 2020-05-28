@@ -47,7 +47,7 @@ compara_GGMAP_OSM = function(inputArchivo = "bases/ejemplo/ejemplo.csv",ventaja_
       puntaje = puntaje - consistencia_distancia*peso_distancia
       puntaje = puntaje - ifelse(consistencia_provincia,0,peso_provincia)
       puntaje = puntaje - ifelse(consistencia_depto,0,peso_departamento)
-      puntaje = puntaje - ifelse(consistencia_nogenerico,0,peso_generico)
+      puntaje = puntaje - ifelse(consistencia_nogenerico,peso_generico,0)
       puntaje = puntaje - ifelse(consistencia_hospital,0,peso_hospital)
       # Me quedo con la fila ganadora y anoto sus datos en el dataset final
       winner_row = which.max(puntaje)

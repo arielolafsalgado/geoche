@@ -6,7 +6,8 @@
 \usage{
 genera_loc_domicilios(datos, campos,
   texto_a_eliminar = c("*SIN DATO* (*SIN DATO*)", "NULL", paste("COMUNA",
-  1:20)), prefijo = "ARGENTINA", sep = ", ", campoNumero = NULL)
+  1:20)), prefijo = "ARGENTINA", sep = ", ", campoNumero = NULL,
+  invertir = F)
 }
 \arguments{
 \item{datos}{Un data frame con los campos_a_domicilio presentes}
@@ -18,6 +19,8 @@ genera_loc_domicilios(datos, campos,
 \item{sep}{El separador a ser usado cuando se peguen los campos. Por default ", "}
 
 \item{campoNumero}{Campo con el número de la calle}
+
+\item{invertir}{Dado que la lógica de construccion es Prefijo-Campo1-Campo2-...-CampoN, con esta opción se puede invertir la construccion a CampoN-...-Campo1-Prefijo. Por default, FALSE}
 
 \item{texto_a_omitir}{Texto a ser omitido en caso de ser encontrado (por comparación exacta). Por default c('*SIN DATO* (*SIN DATO*)','NULL',paste('COMUNA',1:20))}
 }

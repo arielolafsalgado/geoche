@@ -7,7 +7,7 @@
 georreferencia_ggmap(inputArchivo = "bases/ejemplo/ejemplo.csv",
   campos_a_domicilio = c("Localidad", "Calle", "Número"),
   prefijo_domicilio = "ARGENTINA", apikey = readLines("apikey.txt"),
-  sep = ",", write.it = T, verbose = T)
+  sep = ",", write.it = T, verbose = T, invertir = F)
 }
 \arguments{
 \item{inputArchivo}{El path al archivo de datos}
@@ -23,6 +23,8 @@ georreferencia_ggmap(inputArchivo = "bases/ejemplo/ejemplo.csv",
 \item{write.it}{Debe escribirse el resultado? Por default TRUE}
 
 \item{verbose}{Boleano, ¿debe indicarse el resultado? Por default TRUE}
+
+\item{invertir}{Dado que la lógica de construccion de busqueda es Prefijo-Campo1-Campo2-...-CampoN, con esta opción se puede invertir la construccion a CampoN-...-Campo1-Prefijo. Por default, FALSE}
 }
 \value{
 Devuelve el dataset con las columnas agregadas.

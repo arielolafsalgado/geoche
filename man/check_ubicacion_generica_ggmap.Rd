@@ -7,7 +7,8 @@
 check_ubicacion_generica_ggmap(data_ggmap, ubicaciones_genericas_ggmap,
   campos_genericos1, campos_genericos2,
   lonlat_columns = c("LON_RESIDENCIA", "LAT_RESIDENCIA"),
-  texto_a_eliminar = c("*SIN DATO* (*SIN DATO*)", "NULL"), verbose = T)
+  texto_a_eliminar = c("*SIN DATO* (*SIN DATO*)", "NULL"), verbose = T,
+  invertir = F)
 }
 \arguments{
 \item{data_ggmap}{El dataset con las ubicaciones obtenidas por ggmap}
@@ -21,6 +22,8 @@ check_ubicacion_generica_ggmap(data_ggmap, ubicaciones_genericas_ggmap,
 \item{texto_a_eliminar}{El texto a ser eliminado en la construcción de las ubicaciones genericas. Por default c('*SIN DATO* (*SIN DATO*)','NULL')}
 
 \item{verbose}{Boleano ¿Debe imprimirse el progreso? Por default TRUE}
+
+\item{invertir}{Dado que la lógica de construccion de busqueda es Prefijo-Campo1-Campo2-...-CampoN, con esta opción se puede invertir la construccion a CampoN-...-Campo1-Prefijo. Por default, FALSE}
 
 \item{lolat_columns}{Las columnas en las que se encuentras las ubicaciones lon y lat}
 }

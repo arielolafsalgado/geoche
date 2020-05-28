@@ -7,7 +7,8 @@
 check_ubicacion_generica_osm(data_osm, data_ggmap,
   ubicaciones_genericas_osm, campos_genericos1, campos_genericos2,
   lonlat_columns = c("LON_RESIDENCIA_OSM", "LAT_RESIDENCIA_OSM"),
-  texto_a_eliminar = c("*SIN DATO* (*SIN DATO*)", "NULL"), verbose = T)
+  texto_a_eliminar = c("*SIN DATO* (*SIN DATO*)", "NULL"), verbose = T,
+  invertir = F)
 }
 \arguments{
 \item{data_osm}{El dataset con las ubicaciones obtenidas por osm}
@@ -21,6 +22,8 @@ check_ubicacion_generica_osm(data_osm, data_ggmap,
 \item{campos_genericos2}{Los campos a partir de los cuales reconstruir la ubicación generica, en una segunda versión}
 
 \item{verbose}{Boleano ¿Debe imprimirse el progreso? Por default TRUE}
+
+\item{invertir}{Dado que la lógica de construccion de busqueda es Prefijo-Campo1-Campo2-...-CampoN, con esta opción se puede invertir la construccion a CampoN-...-Campo1-Prefijo. Por default, FALSE}
 
 \item{lolat_columns}{Las columnas en las que se encuentras las ubicaciones lon y lat}
 

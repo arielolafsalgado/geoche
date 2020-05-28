@@ -9,7 +9,7 @@ georreferencia_ggmap_y_osm(inputArchivo = "bases/ejemplo/ejemplo.csv",
   campos_a_domicilio2 = c("Partido", "Localidad", "Calle", "Número"),
   prefijo_domicilio = "ARGENTINA", id_column = "IDEVENTOCASO",
   apikey = readLines("apikey.txt"), sep = ",", write.it = T,
-  verbose = T, timeout = 5)
+  verbose = T, timeout = 5, invertir = F)
 }
 \arguments{
 \item{inputArchivo}{El path al archivo de datos}
@@ -29,6 +29,8 @@ georreferencia_ggmap_y_osm(inputArchivo = "bases/ejemplo/ejemplo.csv",
 \item{verbose}{Boleano, ¿debe indicarse el resultado? Por default TRUE}
 
 \item{timeout}{La cantidad de tiempo máxima a esperar por busqueda en OSM}
+
+\item{invertir}{Dado que la lógica de construccion de busqueda es Prefijo-Campo1-Campo2-...-CampoN, con esta opción se puede invertir la construccion a CampoN-...-Campo1-Prefijo. Por default, FALSE}
 }
 \value{
 Devuelve una lista con ambos datasets

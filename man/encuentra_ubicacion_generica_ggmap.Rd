@@ -6,7 +6,7 @@
 \usage{
 encuentra_ubicacion_generica_ggmap(data_ggmap, campos_genericos,
   ubicaciones_genericas_path, prefijo = "ARGENTINA",
-  apikey = readLines("apikey.txt"))
+  apikey = readLines("apikey.txt"), invertir = F)
 }
 \arguments{
 \item{campos_genericos}{Los campos a ser pegados}
@@ -16,6 +16,8 @@ encuentra_ubicacion_generica_ggmap(data_ggmap, campos_genericos,
 \item{prefijo}{Un campo de texto a ser agregado previo al resto. Por default "ARGENTINA"}
 
 \item{apikey}{La clave api de google. Por default, busca apikey.txt}
+
+\item{invertir}{Dado que la lógica de construccion de busqueda es Prefijo-Campo1-Campo2-...-CampoN, con esta opción se puede invertir la construccion a CampoN-...-Campo1-Prefijo. Por default, FALSE}
 
 \item{datos}{Un data frame con los campos_a_domicilio presentes}
 

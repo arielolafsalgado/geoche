@@ -14,7 +14,8 @@
   apikey = readLines("apikey.txt"), write.it = T, verbose = T,
   timeout = 5, texto_a_eliminar = c("*SIN DATO* (*SIN DATO*)", "NULL"),
   lonlat_columns_ggmap = c("LON_RESIDENCIA", "LAT_RESIDENCIA"),
-  lonlat_columns_osm = c("LON_RESIDENCIA_OSM", "LAT_RESIDENCIA_OSM"))
+  lonlat_columns_osm = c("LON_RESIDENCIA_OSM", "LAT_RESIDENCIA_OSM"),
+  invertir = F)
 }
 \arguments{
 \item{inputArchivo}{El path al archivo de datos}
@@ -32,6 +33,8 @@
 \item{verbose}{Boleano, ¿debe indicarse el resultado? Por default TRUE}
 
 \item{timeout}{La cantidad de tiempo máxima a esperar por busqueda en OSM}
+
+\item{invertir}{Dado que la lógica de construccion de busqueda es Prefijo-Campo1-Campo2-...-CampoN, con esta opción se puede invertir la construccion a CampoN-...-Campo1-Prefijo. Por default, FALSE}
 }
 \value{
 Devuelve una lista con ambos datasets
