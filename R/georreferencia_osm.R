@@ -23,10 +23,13 @@ georreferencia_osm = function(inputArchivo = "bases/ejemplo/ejemplo.csv",id_colu
     output_dom = geocode_OSM_ariel(loc_domicilio = loc_domicilio,timeout=timeout)
     aun_por = setdiff(1:nrow(datos),output_dom$fila)
     if(length(aun_por)>0){
-      loc_domicilio2 = genera_loc_domicilios(datos[aun_por,],campos_a_domicilio2,prefijo = prefijo_domicilio)
-      output_dom2 = geocode_OSM_ariel(loc_domicilio2,aun_por = aun_por,timeout = max(timeout/2,1),verbose=verbose)
-      # ACOMODO VARIABLES PARA MANTENER COMPATIBILIDAD
-      output_dom = rbind(output_dom,output_dom2)
+      campos_a_domicilio2 = campos_a_domicilio2[is.element(campos_a_domicilio2,colnames(datos))]
+      if(length(campos_a_domicilio2)>0){
+        loc_domicilio2 = genera_loc_domicilios(datos[aun_por,],campos_a_domicilio2,prefijo = prefijo_domicilio)
+        output_dom2 = geocode_OSM_ariel(loc_domicilio2,aun_por = aun_por,timeout = max(timeout/2,1),verbose=verbose)
+        # ACOMODO VARIABLES PARA MANTENER COMPATIBILIDAD
+        output_dom = rbind(output_dom,output_dom2)
+      }
     }
     if(is.null(output_dom)){
       output_dom = data.frame('LON_RESIDENCIA_OSM'=numeric(),'LAT_RESIDENCIA_OSM'=numeric())
