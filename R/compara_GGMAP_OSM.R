@@ -157,6 +157,7 @@ compara_GGMAP_OSM = function(inputArchivo = "bases/ejemplo/ejemplo.csv",ventaja_
   }
   result = data_check
   if(mapa_check){
+    data_check$IDEVENTOCASO = data_check[,id_column]
     require(leaflet)
     map = leaflet() %>% addProviderTiles(providers$OpenStreetMap)
     markerColors = c('BUENA'='green','MEDIA'='yellow','BAJA'='red')
